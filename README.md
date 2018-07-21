@@ -7,3 +7,5 @@ A repository that contains code associated with various Medium articles I have w
 ## Articles
 
 ### [What A Developer Goes Through When Looking For A Second Job](https://medium.freecodecamp.org/what-a-developer-goes-through-when-looking-for-a-second-job-f061c26ffd8f)
+
+### [JS - Native Communication Bridges](https://medium.com/@tomerpacific/burning-bridges-native-part-1-7baef82b3f02)
