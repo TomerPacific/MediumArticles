@@ -1,0 +1,17 @@
+{
+    "name": "ChromeExampleNewTab",
+    "version": "1.0",
+    "manifest_version": 2,
+    "chrome_url_overrides": {
+    	"newtab": "popup.html"
+    },
+    "browser_action": {},
+    "permissions":[
+    	"tabs"
+    ],
+
+    "background":{
+    	"scripts": ["popup.js"],
+    	"persistent": false
+    }
+}
