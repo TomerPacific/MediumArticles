@@ -17,3 +17,7 @@ A repository that contains code associated with various Medium articles I have w
 ![Documentation Matters](https://github.com/TomerPacific/MediumArticles/blob/master/images/Documentation.jpg?raw=true)
 
 ### [Documentation Matters](https://medium.com/@tomerpacific/documentation-matters-41ef62dd5c2f)
+
+![How To Contribute To An Open Source Project](https://github.com/TomerPacific/MediumArticles/blob/master/images/FirstPR.jpg?raw=true)
+
+### [How To Contribute To An Open Source Project](https://medium.com/@tomerpacific/how-to-contribute-to-an-open-source-repository-d66b5e99eec5)
