@@ -11,7 +11,7 @@
     ],
 
     "background":{
-    	"scripts": ["popup.js"],
+    	"scripts": ["background.js"],
     	"persistent": false
     }
 }
