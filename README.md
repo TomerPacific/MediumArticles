@@ -21,3 +21,7 @@ A repository that contains code associated with various Medium articles I have w
 ![How To Contribute To An Open Source Project](https://github.com/TomerPacific/MediumArticles/blob/master/images/FirstPR.jpg?raw=true)
 
 ### [How To Contribute To An Open Source Project](https://medium.com/@tomerpacific/how-to-contribute-to-an-open-source-repository-d66b5e99eec5)
+
+![How To Implement A Chrome Extension](https://github.com/TomerPacific/MediumArticles/blob/master/images/chromeExtensionArticle.jpg?raw=true)
+
+### [How To Implement A Chrome Extension](https://medium.freecodecamp.org/how-to-implement-a-chrome-extension-3802d63b5376)
