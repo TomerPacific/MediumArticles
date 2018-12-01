@@ -25,3 +25,7 @@ A repository that contains code associated with various Medium articles I have w
 ### [How To Implement A Chrome Extension](https://medium.freecodecamp.org/how-to-implement-a-chrome-extension-3802d63b5376)
 
 ![How To Implement A Chrome Extension](https://github.com/TomerPacific/MediumArticles/blob/master/images/chromeExtensionArticle.jpg?raw=true)
+
+### [How To Publish A Chrome Extension](https://medium.freecodecamp.org/how-to-publish-your-chrome-extension-dd8400a3d53)
+
+![How To Publish A Chrome Extension](https://github.com/TomerPacific/MediumArticles/blob/master/images/howToPublishChromeExtension.jpg?raw=true)
