@@ -29,3 +29,9 @@ A repository that contains code associated with various Medium articles I have w
 ### [How To Publish A Chrome Extension](https://medium.freecodecamp.org/how-to-publish-your-chrome-extension-dd8400a3d53)
 
 ![How To Publish A Chrome Extension](https://github.com/TomerPacific/MediumArticles/blob/master/images/howToPublishChromeExtension.jpg?raw=true)
+
+### [Making Sense Of Android Layouts](https://medium.freecodecamp.org/how-to-make-sense-of-the-many-android-layouts-693b262706e0)
+
+![Making Sense Of Android Layouts](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidLayouts.jpg?raw=true)
+
+
