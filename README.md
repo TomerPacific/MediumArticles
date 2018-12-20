@@ -34,4 +34,7 @@ A repository that contains code associated with various Medium articles I have w
 
 ![Making Sense Of Android Layouts](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidLayouts.jpg?raw=true)
 
+### [Israel's IP Problem](https://hackernoon.com/israels-ip-problem-7d8916cb93ec)
+
+![Israel's IP Problem](https://github.com/TomerPacific/MediumArticles/blob/master/images/IsraelIPProblem.jpg?raw=true)
 
