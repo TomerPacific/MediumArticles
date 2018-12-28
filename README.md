@@ -38,3 +38,7 @@ A repository that contains code associated with various Medium articles I have w
 
 ![Israel's IP Problem](https://github.com/TomerPacific/MediumArticles/blob/master/images/IsraelIPProblem.jpg?raw=true)
 
+### [Android Visibility Listeners](https://medium.freecodecamp.org/how-and-why-to-use-android-visibility-listeners-971e3b6511ec)
+
+![AndroidVisibilityListeners](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidVisibility.jpg?raw=true)
+
