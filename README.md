@@ -42,3 +42,7 @@ A repository that contains code associated with various Medium articles I have w
 
 ![AndroidVisibilityListeners](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidVisibility.jpg?raw=true)
 
+### [Chrome APIs](https://medium.freecodecamp.org/features-of-the-chrome-api-you-should-know-bf5c8b6c7733)
+
+![ChromeAPIs](https://github.com/TomerPacific/MediumArticles/blob/master/images/ChromeAPI.jpg?raw=true)
+
