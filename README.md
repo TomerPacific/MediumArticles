@@ -46,3 +46,7 @@ A repository that contains code associated with various Medium articles I have w
 
 ![ChromeAPIs](https://github.com/TomerPacific/MediumArticles/blob/master/images/ChromeAPI.jpg?raw=true)
 
+### [How To Publish An Application In The Play Store](https://medium.freecodecamp.org/how-to-publish-an-application-in-the-play-store-8ddcc6dc3587)
+
+![How To Publish An Application In The Play Store](https://github.com/TomerPacific/MediumArticles/blob/master/images/PlayStorePublish.jpg?raw=true)
+
