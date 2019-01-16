@@ -3,6 +3,8 @@ A repository that contains code associated with various Medium articles I have w
 
 [Medium Profile](https://medium.com/@tomerpacific)
 
+You can also view a CodePen I have made showcasing all the articles [here](https://codepen.io/TomerBenRachel/pen/NeMRmG)
+
 ---
 ## Articles
 
