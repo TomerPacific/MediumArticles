@@ -55,3 +55,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Flutter > React Native](https://hackernoon.com/flutter-react-native-b5e82a2c3e82)
 
 ![Flutter > React Native](https://github.com/TomerPacific/MediumArticles/blob/master/images/FlutterReact.jpg?raw=true)
+
+### [Integrating Firebase](https://medium.freecodecamp.org/how-to-integrate-firebase-with-your-application-74fdde01dfe2)
+
+![Integrating Firebase](https://github.com/TomerPacific/MediumArticles/blob/master/images/IntegratingFirebase.jpg?raw=true)
