@@ -59,3 +59,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Integrating Firebase](https://medium.freecodecamp.org/how-to-integrate-firebase-with-your-application-74fdde01dfe2)
 
 ![Integrating Firebase](https://github.com/TomerPacific/MediumArticles/blob/master/images/IntegratingFirebase.jpg?raw=true)
+
+### [Why Friendships Are Dead](https://hackernoon.com/why-friendships-are-dead-4db6f27962da)
+
+![Why Friendships Are Dead](https://github.com/TomerPacific/MediumArticles/blob/master/images/Friendships.jpg?raw=true)
