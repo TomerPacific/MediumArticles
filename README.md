@@ -63,3 +63,8 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Why Friendships Are Dead](https://hackernoon.com/why-friendships-are-dead-4db6f27962da)
 
 ![Why Friendships Are Dead](https://github.com/TomerPacific/MediumArticles/blob/master/images/Friendships.jpg?raw=true)
+
+### [What I've Learned From Publishing Stories On Medium](https://medium.freecodecamp.org/what-ive-learned-from-publishing-stories-on-medium-9057da232465)
+
+![What I've Learned From Publishing Stories On Medium](https://github.com/TomerPacific/MediumArticles/blob/master/images/PublishingMedium.jpg?raw=true)
+
