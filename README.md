@@ -68,3 +68,6 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 
 ![What I've Learned From Publishing Stories On Medium](https://github.com/TomerPacific/MediumArticles/blob/master/images/PublishingMedium.jpg?raw=true)
 
+### [How To Properly Give A Code Review](https://medium.freecodecamp.org/how-to-properly-give-a-code-review-c2fcc49e345f)
+
+![How To Properly Give A Code Review](https://github.com/TomerPacific/MediumArticles/blob/master/images/CodeReview.jpg?raw=true)
