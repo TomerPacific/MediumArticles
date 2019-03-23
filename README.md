@@ -71,3 +71,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [How To Properly Give A Code Review](https://medium.freecodecamp.org/how-to-properly-give-a-code-review-c2fcc49e345f)
 
 ![How To Properly Give A Code Review](https://github.com/TomerPacific/MediumArticles/blob/master/images/CodeReview.jpg?raw=true)
+
+### [Perseverance In Automation](https://medium.com/swlh/perseverance-in-automation-147630672ba8)
+
+![Perseverance In Automation](https://github.com/TomerPacific/MediumArticles/blob/master/images/AutomationPerseverance.jpg?raw=true)
