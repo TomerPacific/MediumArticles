@@ -75,3 +75,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Perseverance In Automation](https://medium.com/swlh/perseverance-in-automation-147630672ba8)
 
 ![Perseverance In Automation](https://github.com/TomerPacific/MediumArticles/blob/master/images/AutomationPerseverance.jpg?raw=true)
+
+### [Android Menus](https://medium.freecodecamp.org/an-introduction-to-android-menus-c9f382264b49)
+
+![Android Menus](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidMenus.jpg?raw=true)
