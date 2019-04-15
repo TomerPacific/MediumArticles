@@ -79,3 +79,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Android Menus](https://medium.freecodecamp.org/an-introduction-to-android-menus-c9f382264b49)
 
 ![Android Menus](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidMenus.jpg?raw=true)
+
+### [What I Should Have Known Before Publishing An Application](https://hackernoon.com/what-i-should-have-known-before-publishing-an-application-898d8f72a0e2)
+
+![What I Should Have Known Before Publishing An Application](https://github.com/TomerPacific/MediumArticles/blob/master/images/BeforePublishing.jpg?raw=true)
