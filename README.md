@@ -83,3 +83,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [What I Should Have Known Before Publishing An Application](https://hackernoon.com/what-i-should-have-known-before-publishing-an-application-898d8f72a0e2)
 
 ![What I Should Have Known Before Publishing An Application](https://github.com/TomerPacific/MediumArticles/blob/master/images/BeforePublishing.jpg?raw=true)
+
+### [Get A User's Location In Flutter](https://medium.com/flutter-community/get-a-users-location-in-flutter-20f488ac8043)
+
+![Get A User's Location In Flutter](https://github.com/TomerPacific/MediumArticles/blob/master/images/FlutterLocation.jpg?raw=true)
