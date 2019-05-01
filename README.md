@@ -87,3 +87,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Get A User's Location In Flutter](https://medium.com/flutter-community/get-a-users-location-in-flutter-20f488ac8043)
 
 ![Get A User's Location In Flutter](https://github.com/TomerPacific/MediumArticles/blob/master/images/FlutterLocation.jpg?raw=true)
+
+### [A Different Approach To Hackathons](https://medium.freecodecamp.org/a-different-approach-to-hackathons-b88960d9cb79)
+
+![A Different Approach To Hackathons](https://github.com/TomerPacific/MediumArticles/blob/master/images/hackathons.jpg?raw=true)
