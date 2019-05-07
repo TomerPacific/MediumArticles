@@ -91,3 +91,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [A Different Approach To Hackathons](https://medium.freecodecamp.org/a-different-approach-to-hackathons-b88960d9cb79)
 
 ![A Different Approach To Hackathons](https://github.com/TomerPacific/MediumArticles/blob/master/images/hackathons.jpg?raw=true)
+
+### [Managing Flutter Packages](https://medium.com/flutter-community/managing-packages-in-flutter-6018cecaf3a7)
+
+![Managing Flutter Packages](https://github.com/TomerPacific/MediumArticles/blob/master/images/FlutterPackages-Big.jpg?raw=true)
