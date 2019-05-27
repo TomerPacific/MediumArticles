@@ -95,3 +95,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Managing Flutter Packages](https://medium.com/flutter-community/managing-packages-in-flutter-6018cecaf3a7)
 
 ![Managing Flutter Packages](https://github.com/TomerPacific/MediumArticles/blob/master/images/FlutterPackages-Big.jpg?raw=true)
+
+### [PWA](https://medium.freecodecamp.org/an-explanation-of-progressive-web-apps-for-the-non-pwa-crowd-8a400e275ea1)
+
+![PWA](https://github.com/TomerPacific/MediumArticles/blob/master/images/PWA.jpg?raw=true)
