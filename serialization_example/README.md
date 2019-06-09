@@ -2,15 +2,16 @@
 
 Serialization Example
 
-## Getting Started
+## Purpose
 
-This project is a starting point for a Flutter application.
+This project holds code to demonstrate how you can serialize/de-serialize JSON in your Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Areas Of Interest
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+- There are two model classes that represent our JSON data, **doughnut.dart** and **doughnut_list.dart**.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+- There are two main files, **main.dart** and **main_doughnut_list.dart**
+
+## Medium Article
+
+You can see the Medium article that explains the use of this project [here](https://medium.com/flutter-community/serializing-your-object-in-flutter-ab510f0b8b47).
