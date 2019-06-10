@@ -99,3 +99,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [PWA](https://medium.freecodecamp.org/an-explanation-of-progressive-web-apps-for-the-non-pwa-crowd-8a400e275ea1)
 
 ![PWA](https://github.com/TomerPacific/MediumArticles/blob/master/images/PWA.jpg?raw=true)
+
+### [Serialize In Flutter](https://medium.com/flutter-community/serializing-your-object-in-flutter-ab510f0b8b47)
+
+![Serialize In Flutter](https://github.com/TomerPacific/MediumArticles/blob/master/images/serialize_flutter.jpg?raw=true)
