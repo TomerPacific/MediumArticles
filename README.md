@@ -103,3 +103,8 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Serialize In Flutter](https://medium.com/flutter-community/serializing-your-object-in-flutter-ab510f0b8b47)
 
 ![Serialize In Flutter](https://github.com/TomerPacific/MediumArticles/blob/master/images/serialize_flutter.jpg?raw=true)
+
+### [Broadcast Receivers](https://android.jlelse.eu/broadcast-receivers-for-beginners-a9d7aa03fb76)
+
+![Broadcast Receivers](https://github.com/TomerPacific/MediumArticles/blob/master/images/BroadcastAndroid.jpg?raw=true)
+
