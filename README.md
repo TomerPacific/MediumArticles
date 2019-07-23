@@ -108,3 +108,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 
 ![Broadcast Receivers](https://github.com/TomerPacific/MediumArticles/blob/master/images/BroadcastAndroid.jpg?raw=true)
 
+### [How Being A Mentor Can Be A Double Edged Sword](https://www.freecodecamp.org/news/how-being-a-mentor-can-be-a-double-edged-sword/)
+
+![How Being A Mentor Can Be A Double Edged Sword](https://github.com/TomerPacific/MediumArticles/blob/master/images/Mentor.jpg?raw=true)
+
