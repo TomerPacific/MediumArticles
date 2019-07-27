@@ -112,3 +112,6 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 
 ![How Being A Mentor Can Be A Double Edged Sword](https://github.com/TomerPacific/MediumArticles/blob/master/images/Mentor.jpg?raw=true)
 
+### [How To Approach A Coding Task](https://medium.com/better-programming/how-to-approach-a-coding-task-15178b7f04fa)
+
+![How To Approach A Coding Task](https://github.com/TomerPacific/MediumArticles/blob/master/images/CodingTask.jpg?raw=true)
