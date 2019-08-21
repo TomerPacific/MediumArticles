@@ -13,6 +13,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private String FILENAME = "hello_world_file";
+    private String inputToFile = "Hello From Internal Storage!";
 
 
     @Override
@@ -23,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void saveFileInternalStorage(View view) {
-
-        String inputToFile = "Hello From Internal Storage!";
         try {
             FileOutputStream fileOutputStream = openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fileOutputStream.write(inputToFile.getBytes());
@@ -44,4 +43,5 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
 }

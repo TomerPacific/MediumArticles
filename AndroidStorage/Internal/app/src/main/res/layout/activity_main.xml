@@ -17,13 +17,13 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="Click to save a file in internal storage"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/internalStorage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/internalStorage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,10 +33,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:onClick="saveFileInternalStorage"
-        android:text="Save File"
+        android:text="Save File Internally"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
