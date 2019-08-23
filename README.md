@@ -117,3 +117,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [How To Approach A Coding Task](https://medium.com/better-programming/how-to-approach-a-coding-task-15178b7f04fa)
 
 ![How To Approach A Coding Task](https://github.com/TomerPacific/MediumArticles/blob/master/images/CodingTask.jpg?raw=true)
+
+### [Anroid Storage](https://android.jlelse.eu/android-memory-cd45b82c0995)
+
+![Android Storage](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidStorage.jpg?raw=true)
