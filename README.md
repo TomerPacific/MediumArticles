@@ -121,3 +121,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [Anroid Storage](https://android.jlelse.eu/android-memory-cd45b82c0995)
 
 ![Android Storage](https://github.com/TomerPacific/MediumArticles/blob/master/images/AndroidStorage.jpg?raw=true)
+
+### [How Expo Is Fooling Everyone](https://medium.com/better-programming/how-expo-is-fooling-everyone-adf7f34d7528)
+https://medium.com/better-programming/how-expo-is-fooling-everyone-adf7f34d7528
+![How Expo Is Fooling Everyone](https://github.com/TomerPacific/MediumArticles/blob/master/images/Expo.jpg?raw=true)
