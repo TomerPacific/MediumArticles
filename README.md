@@ -125,3 +125,7 @@ You can also view a CodePen I have made showcasing all the articles [here](https
 ### [How Expo Is Fooling Everyone](https://medium.com/better-programming/how-expo-is-fooling-everyone-adf7f34d7528)
 
 ![How Expo Is Fooling Everyone](https://github.com/TomerPacific/MediumArticles/blob/master/images/Expo.jpg?raw=true)
+
+### [The Medium Dilemma](https://medium.com/@tomerpacific/the-medium-dilemma-39307304558)
+
+![The Medium Dilemma](https://github.com/TomerPacific/MediumArticles/blob/master/images/MediumDilemma.jpg?raw=true)
