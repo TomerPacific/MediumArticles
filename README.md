@@ -1,8 +1,9 @@
 # MediumArticles
-A repository that contains code associated with various Medium articles I have written
+A repository that contains links to all the articles I wrote and code associated with them
+
+![Profile](https://github.com/TomerPacific/MediumArticles/blob/master/images/medium_profile.jpg?raw=true)
 
 [Medium Profile](https://medium.com/@tomerpacific)
-
 ---
 ## Articles
 
