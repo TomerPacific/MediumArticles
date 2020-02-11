@@ -66,3 +66,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### [How Expo Is Fooling Everyone](https://medium.com/better-programming/how-expo-is-fooling-everyone-adf7f34d7528)
 
 ### [The Medium Dilemma](https://medium.com/@tomerpacific/the-medium-dilemma-39307304558)
+
+### [Data Binding In Android](https://medium.com/better-programming/how-to-bind-data-in-android-bbb1e180a928)
