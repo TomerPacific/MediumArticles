@@ -68,3 +68,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### [The Medium Dilemma](https://medium.com/@tomerpacific/the-medium-dilemma-39307304558)
 
 ### [Data Binding In Android](https://medium.com/better-programming/how-to-bind-data-in-android-bbb1e180a928)
+
+### [In App Updates](https://android.jlelse.eu/in-app-updates-6de58dab26ce)
