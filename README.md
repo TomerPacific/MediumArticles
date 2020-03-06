@@ -70,3 +70,7 @@ A repository that contains links to all the articles I wrote and code associated
 ### [Data Binding In Android](https://medium.com/better-programming/how-to-bind-data-in-android-bbb1e180a928)
 
 ### [In App Updates](https://android.jlelse.eu/in-app-updates-6de58dab26ce)
+
+### [Why Interviewing As A Developer Is Complete Nonesense](https://hackernoon.com/why-interviewing-as-a-developer-is-complete-nonsense-qt6q3yb4)
+
+
