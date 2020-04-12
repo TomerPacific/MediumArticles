@@ -1,5 +1,6 @@
 package com.tomerpacific.alertdialog
 
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Alert Dialog with a long title example
-        //alertDialogWithLongTitle()
+        alertDialogWithLongTitle()
 
         //Alert Dialog with a list of items example
         //alertDialogWithList()
@@ -26,11 +27,16 @@ class MainActivity : AppCompatActivity() {
     private fun alertDialogWithLongTitle() {
         val dialog = AlertDialog.Builder(this)
         val textView = TextView(this)
-        textView.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisi neque, pulvinar sit amet tortor vitae, porta suscipit neque. Vivamus tristique tellus nec sodales ullamcorper. In convallis nunc eget pellentesque efficitur. "
-        textView.textSize = 15.0F
-        textView.gravity = Gravity.CENTER
+
+        with(textView) {
+            textView.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisi neque, pulvinar sit amet tortor vitae, porta suscipit neque."
+            textView.textSize = 20.0F
+            textView.setTypeface(null, Typeface.BOLD)
+            textView.gravity = Gravity.CENTER
+        }
+
         dialog.setCustomTitle(textView)
-        dialog.setMessage("AlertDialog With Custom Title")
+        dialog.setMessage("AlertDialog Message")
         dialog.setNeutralButton("Dismiss") {dialog, which ->
             //Neutral button click logic
         }
