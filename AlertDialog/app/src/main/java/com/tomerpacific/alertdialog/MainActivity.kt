@@ -6,6 +6,12 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,10 +20,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Alert Dialog with a long title example
-        alertDialogWithLongTitle()
+        //alertDialogWithLongTitle()
 
         //Alert Dialog with a list of items example
         //alertDialogWithList()
+        //alertDialogWithListSingle()
 
         //Alert Dialog with an image
         //alertDialogWithImage()
@@ -50,6 +57,20 @@ class MainActivity : AppCompatActivity() {
         dialog.setAdapter(listAdapter, {dialog, which ->
             //Clicking on list element logic here
         })
+
+        dialog.setNeutralButton("Dismiss") {dialog, which ->
+            //Click on dismiss button logic here
+        }
+        dialog.show()
+    }
+
+    private fun alertDialogWithListSingle() {
+        val items = arrayOf<CharSequence>("One", "Two", "Three")
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Items List")
+        dialog.setSingleChoiceItems(items, -1) { dialog, which ->
+            //Clicking on list element logic here
+        }
 
         dialog.setNeutralButton("Dismiss") {dialog, which ->
             //Click on dismiss button logic here
