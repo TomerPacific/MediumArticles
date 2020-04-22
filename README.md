@@ -73,4 +73,4 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### [Why Interviewing As A Developer Is Complete Nonesense](https://hackernoon.com/why-interviewing-as-a-developer-is-complete-nonsense-qt6q3yb4)
 
-
+### [What You Might Not Know About The AlertDialog](https://proandroiddev.com/what-you-might-not-know-about-the-alertdialog-2bdc55f3d907)
