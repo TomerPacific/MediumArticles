@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/fragment_a_btn"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:padding="10dp"
-            android:text="Go To Fragment A"
-            android:textColor="#FFF"
-            >
+            android:text="Welcome!"
+            android:textSize="30dp"
+            android:textAlignment="center">
 
-        </Button>
+        </TextView>
 
-        <Button
-            android:id="@+id/fragment_b_btn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:padding="10dp"
-            android:text="Go To Fragment B"
-            android:textColor="#FFF"
-            >
+            android:orientation="horizontal"
+            android:gravity="center">
 
-        </Button>
+                <Button
+                    android:id="@+id/fragment_a_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:padding="10dp"
+                    android:text="Go To Fragment A"
+                    android:layout_marginRight="20dp"
+                    android:textColor="#FFF"
+                    >
+                </Button>
+
+                <Button
+                    android:id="@+id/fragment_b_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:padding="10dp"
+                    android:text="Go To Fragment B"
+                    android:textColor="#FFF"
+                    >
+                </Button>
+
+        </LinearLayout>
+
 
 </LinearLayout>

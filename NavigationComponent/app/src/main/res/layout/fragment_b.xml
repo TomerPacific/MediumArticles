@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:text="Fragment B"
         android:textAlignment="center"
-        android:textSize="25dp"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063">
+        app:layout_constraintVertical_bias="0.133">
 
     </TextView>
 
