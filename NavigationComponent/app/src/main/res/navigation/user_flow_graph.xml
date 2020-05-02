@@ -6,5 +6,20 @@
     <fragment
         android:id="@+id/startFragment"
         android:name="com.tomerpacific.navigationcomponent.StartFragment"
-        android:label="StartFragment" />
+        android:label="StartFragment" >
+        <action
+            android:id="@+id/action_startFragment_to_fragmentA3"
+            app:destination="@id/fragmentA" />
+        <action
+            android:id="@+id/action_startFragment_to_fragmentB2"
+            app:destination="@id/fragmentB" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentA"
+        android:name="com.tomerpacific.navigationcomponent.FragmentA"
+        android:label="FragmentA" />
+    <fragment
+        android:id="@+id/fragmentB"
+        android:name="com.tomerpacific.navigationcomponent.FragmentB"
+        android:label="FragmentB" />
 </navigation>
