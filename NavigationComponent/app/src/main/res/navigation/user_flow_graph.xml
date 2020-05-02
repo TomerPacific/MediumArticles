@@ -8,10 +8,10 @@
         android:name="com.tomerpacific.navigationcomponent.StartFragment"
         android:label="StartFragment" >
         <action
-            android:id="@+id/action_startFragment_to_fragmentA3"
+            android:id="@+id/action_startFragment_to_fragmentA"
             app:destination="@id/fragmentA" />
         <action
-            android:id="@+id/action_startFragment_to_fragmentB2"
+            android:id="@+id/action_startFragment_to_fragmentB"
             app:destination="@id/fragmentB" />
     </fragment>
     <fragment

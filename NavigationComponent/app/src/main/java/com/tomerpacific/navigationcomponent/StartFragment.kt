@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 
 class StartFragment : Fragment() {
 
@@ -21,13 +22,13 @@ class StartFragment : Fragment() {
         val activityBBtn : Button = root.findViewById(R.id.fragment_b_btn)
 
         activityABtn.setOnClickListener {button ->
-            val myFragment : FragmentA = FragmentA()
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit()
+            val action = StartFragmentDirections.actionStartFragmentToFragmentA()
+            button.findNavController().navigate(action)
         }
 
         activityBBtn.setOnClickListener {button ->
-            val myFragment : FragmentB = FragmentB()
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit()
+            val action = StartFragmentDirections.actionStartFragmentToFragmentB()
+            button.findNavController().navigate(action)
         }
 
         return root
