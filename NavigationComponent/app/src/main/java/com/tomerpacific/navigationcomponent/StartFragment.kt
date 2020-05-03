@@ -18,15 +18,15 @@ class StartFragment : Fragment() {
     ): View? {
         val root =  inflater.inflate(R.layout.fragment_start, container, false)
 
-        val activityABtn : Button = root.findViewById(R.id.fragment_a_btn)
-        val activityBBtn : Button = root.findViewById(R.id.fragment_b_btn)
+        val fragmentABtn : Button = root.findViewById(R.id.fragment_a_btn)
+        val fragmentBBtn : Button = root.findViewById(R.id.fragment_b_btn)
 
-        activityABtn.setOnClickListener {button ->
+        fragmentABtn.setOnClickListener { button ->
             val action = StartFragmentDirections.actionStartFragmentToFragmentA("Hello From Fragment A")
             button.findNavController().navigate(action)
         }
 
-        activityBBtn.setOnClickListener {button ->
+        fragmentBBtn.setOnClickListener { button ->
             val action = StartFragmentDirections.actionStartFragmentToFragmentB()
             button.findNavController().navigate(action)
         }
