@@ -22,7 +22,7 @@ class StartFragment : Fragment() {
         val fragmentBBtn : Button = root.findViewById(R.id.fragment_b_btn)
 
         fragmentABtn.setOnClickListener { button ->
-            val action = StartFragmentDirections.actionStartFragmentToFragmentA("Hello From Fragment A")
+            val action = StartFragmentDirections.actionStartFragmentToFragmentA("Hello From Start Fragment")
             button.findNavController().navigate(action)
         }
 
