@@ -13,15 +13,16 @@
         <action
             android:id="@+id/action_startFragment_to_fragmentB"
             app:destination="@id/fragmentB" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentA"
+        android:name="com.tomerpacific.navigationcomponent.FragmentA"
+        android:label="FragmentA" >
         <argument
             android:name="message"
             app:argType="string"
             android:defaultValue='""' />
     </fragment>
-    <fragment
-        android:id="@+id/fragmentA"
-        android:name="com.tomerpacific.navigationcomponent.FragmentA"
-        android:label="FragmentA" />
     <fragment
         android:id="@+id/fragmentB"
         android:name="com.tomerpacific.navigationcomponent.FragmentB"
