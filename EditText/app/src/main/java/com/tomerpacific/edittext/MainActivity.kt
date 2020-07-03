@@ -6,7 +6,10 @@ import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.Toast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +44,16 @@ class MainActivity : AppCompatActivity() {
                 timer.purge()
             }
         })
+
+        edittext.setOnEditorActionListener {view, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
+                keyEvent == null ||
+                keyEvent.keyCode == KeyEvent.KEYCODE_ENTER) {
+                Toast.makeText(this, "You typed " + edittext.text.toString(), Toast.LENGTH_SHORT).show()
+                true
+            }
+            false
+        }
     }
 
 
