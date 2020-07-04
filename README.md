@@ -76,3 +76,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### [What You Might Not Know About The AlertDialog](https://proandroiddev.com/what-you-might-not-know-about-the-alertdialog-2bdc55f3d907)
 
 ### [Navigation Component](https://proandroiddev.com/android-navigation-component-fc783c03bb8d)
+
+### [EditText - User Input Done Right](https://proandroiddev.com/edittext-user-input-done-right-9efebe877091)
