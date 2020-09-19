@@ -78,3 +78,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### [Navigation Component](https://proandroiddev.com/android-navigation-component-fc783c03bb8d)
 
 ### [EditText - User Input Done Right](https://proandroiddev.com/edittext-user-input-done-right-9efebe877091)
+
+### [IDFA And You](https://medium.com/macoclock/idfa-and-you-7907c7336119)
