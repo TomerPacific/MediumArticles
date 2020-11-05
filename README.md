@@ -11,7 +11,7 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### [JS - Native Communication Bridges](https://medium.com/@tomerpacific/burning-bridges-native-part-1-7baef82b3f02)
 
-### [Documentation Matters](https://medium.com/@tomerpacific/documentation-matters-41ef62dd5c2f)
+### [Why Documentation Matters](https://medium.com/@tomerpacific/documentation-matters-41ef62dd5c2f)
 
 ### [How To Contribute To An Open Source Project](https://medium.com/@tomerpacific/how-to-contribute-to-an-open-source-repository-d66b5e99eec5)
 
