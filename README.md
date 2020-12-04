@@ -1,9 +1,7 @@
 # MediumArticles
 A repository that contains links to all the articles I wrote and code associated with them
 
-![Profile](https://github.com/TomerPacific/MediumArticles/blob/master/images/medium_profile.jpg?raw=true)
-
-[Medium Profile](https://medium.com/@tomerpacific)
+<a href="https://medium.com/@tomerpacific" target="_blank"><img src="https://github.com/TomerPacific/MediumArticles/blob/master/images/medium_profile.jpg?raw=true"></a>
 ---
 ## Articles
 
