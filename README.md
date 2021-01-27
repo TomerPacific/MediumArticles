@@ -82,3 +82,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 38. [Authenticate Users and Save Data in a Database Using Firebase](https://medium.com/better-programming/authenticate-users-and-save-data-in-a-database-using-firebase-5a7e8828a5f8)
 
 ### 39. [Flutter Native - JS Communication Bridge](https://medium.com/flutter-community/js-native-communication-bridge-in-flutter-f94b65913df1)
+
+### 40. [Using Nodemailer To Sent Emails](https://medium.com/better-programming/using-nodemailer-to-send-emails-from-your-node-js-server-d726f73d0439)
