@@ -84,3 +84,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 39. [Flutter Native - JS Communication Bridge](https://medium.com/flutter-community/js-native-communication-bridge-in-flutter-f94b65913df1)
 
 ### 40. [Using Nodemailer To Send Emails](https://medium.com/better-programming/using-nodemailer-to-send-emails-from-your-node-js-server-d726f73d0439)
+
+### 41. [Deploy A Routed React Application To GitHub Pages](https://betterprogramming.pub/how-to-deploy-a-routed-react-app-to-github-pages-9a40a31a0afc)
