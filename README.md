@@ -88,3 +88,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 41. [Deploy A Routed React Application To GitHub Pages](https://betterprogramming.pub/how-to-deploy-a-routed-react-app-to-github-pages-9a40a31a0afc)
 
 ### 42. [Constructors In Dart](https://www.freecodecamp.org/news/constructors-in-dart/)
+
+### 43. [Local Notifications In Flutter](https://medium.com/flutter-community/local-notifications-in-flutter-746eb1d606c6)
