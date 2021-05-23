@@ -1,8 +1,6 @@
 # MediumArticles
 A repository that contains links to all the articles I wrote and code associated with them
 
-<a href="https://medium.com/@tomerpacific" target="_blank"><img src="https://github.com/TomerPacific/MediumArticles/blob/master/images/medium_profile.jpg?raw=true"></a>
----
 ## Articles
 
 ### 1.  [What A Developer Goes Through When Looking For A Second Job](https://medium.freecodecamp.org/what-a-developer-goes-through-when-looking-for-a-second-job-f061c26ffd8f)
