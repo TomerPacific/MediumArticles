@@ -49,7 +49,7 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 23. [PWA](https://medium.freecodecamp.org/an-explanation-of-progressive-web-apps-for-the-non-pwa-crowd-8a400e275ea1)
 
-### 24. [Serialize In Flutter](https://medium.com/flutter-community/serializing-your-object-in-flutter-ab510f0b8b47)
+### 24. [Serialization In Flutter](https://medium.com/flutter-community/serializing-your-object-in-flutter-ab510f0b8b47)
 
 ### 25. [Broadcast Receivers](https://android.jlelse.eu/broadcast-receivers-for-beginners-a9d7aa03fb76)
 
