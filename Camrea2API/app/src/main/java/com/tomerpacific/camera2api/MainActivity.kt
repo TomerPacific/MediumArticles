@@ -5,10 +5,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.ImageFormat
 import android.graphics.SurfaceTexture
-import android.hardware.camera2.CameraCharacteristics
-import android.hardware.camera2.CameraDevice
-import android.hardware.camera2.CameraManager
+import android.hardware.camera2.*
+import android.hardware.camera2.params.StreamConfigurationMap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,10 +16,13 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.provider.Settings
 import android.util.Log
+import android.util.Size
+import android.view.Surface
 import android.view.TextureView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.util.*
 
 val TAG = MainActivity::class.simpleName
 val CAMERA_REQUEST_RESULT = 1
@@ -31,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var backgroundHandlerThread: HandlerThread
     private lateinit var backgroundHandler: Handler
     private lateinit var cameraManager: CameraManager
+    private lateinit var cameraDevice: CameraDevice
+    private lateinit var captureRequestBuilder: CaptureRequest.Builder
 
 
     @SuppressLint("MissingPermission")
@@ -40,14 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         textureView = findViewById(R.id.texture_view)
         cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
-
-        if (wasCameraPermissionWasGiven()) {
-            setRearFacingCameraId()
-            cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
-        } else {
+        if (!wasCameraPermissionWasGiven()) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_REQUEST_RESULT)
         }
-
     }
 
     override fun onResume() {
@@ -114,8 +114,10 @@ class MainActivity : AppCompatActivity() {
      */
 
     private val surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+        @SuppressLint("MissingPermission")
         override fun onSurfaceTextureAvailable(texture: SurfaceTexture, width: Int, height: Int) {
-
+            setRearFacingCameraId()
+            cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
         }
         override fun onSurfaceTextureSizeChanged(texture: SurfaceTexture, width: Int, height: Int) {
 
@@ -136,7 +138,22 @@ class MainActivity : AppCompatActivity() {
 
     private val cameraStateCallback = object : CameraDevice.StateCallback() {
         override fun onOpened(camera: CameraDevice) {
+            cameraDevice = camera
+            val surfaceTexture : SurfaceTexture? = textureView.surfaceTexture
 
+            val cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId)
+            val streamConfigurationMap : StreamConfigurationMap? = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+            val previewSize: Array<Size> = streamConfigurationMap?.getOutputSizes(ImageFormat.JPEG)!!
+
+            surfaceTexture?.setDefaultBufferSize(previewSize[0].width, previewSize[0].height)
+
+            val previewSurface: Surface = Surface(surfaceTexture)
+
+            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
+            captureRequestBuilder.addTarget(previewSurface)
+            val surfaces: MutableList<Surface> = ArrayList<Surface>(1)
+            surfaces.add(previewSurface)
+            cameraDevice.createCaptureSession(surfaces, captureStateCallback, null)
         }
 
         override fun onDisconnected(cameraDevice: CameraDevice) {
@@ -162,12 +179,24 @@ class MainActivity : AppCompatActivity() {
     private fun startBackgroundThread() {
         backgroundHandlerThread = HandlerThread("CameraVideoThread")
         backgroundHandlerThread.start()
-        backgroundHandler = Handler(
-                backgroundHandlerThread.looper)
+        backgroundHandler = Handler(backgroundHandlerThread.looper)
     }
 
     private fun stopBackgroundThread() {
         backgroundHandlerThread.quitSafely()
         backgroundHandlerThread.join()
+    }
+
+    /**
+     * Capture State Callback
+     */
+
+    private val captureStateCallback = object : CameraCaptureSession.StateCallback() {
+        override fun onConfigureFailed(session: CameraCaptureSession) {
+
+        }
+        override fun onConfigured(session: CameraCaptureSession) {
+            session.setRepeatingRequest(captureRequestBuilder.build(), null, backgroundHandler)
+        }
     }
 }
