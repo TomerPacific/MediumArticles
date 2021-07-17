@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.tomerpacific.camera2api"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
