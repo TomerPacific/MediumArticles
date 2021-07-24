@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var captureRequestBuilder: CaptureRequest.Builder
     private lateinit var cameraCaptureSession: CameraCaptureSession
     private lateinit var imageReader: ImageReader
-    private lateinit var previewSize: Array<Size>
+    private lateinit var previewSize: Size
     private var orientations : SparseIntArray = SparseIntArray(4).apply {
         append(Surface.ROTATION_0, 0)
         append(Surface.ROTATION_90, 90)
@@ -68,33 +68,26 @@ class MainActivity : AppCompatActivity() {
         if (!wasCameraPermissionWasGiven()) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_REQUEST_RESULT)
         }
+        startBackgroundThread()
     }
 
     override fun onResume() {
         super.onResume()
-        startBackgroundThread()
-        if (textureView.isAvailable) {
-            setRearFacingCameraId()
-            imageReader = ImageReader.newInstance(
-                textureView.width,
-                textureView.height,
-                ImageFormat.JPEG,
-                1
-            )
-            imageReader.setOnImageAvailableListener(onImageAvailableListener, backgroundHandler)
-        } else {
-            textureView.surfaceTextureListener = surfaceTextureListener
-        }
+//        startBackgroundThread()
+//        if (textureView.isAvailable) {
+//            setupCamera()
+//        } else {
+//            textureView.surfaceTextureListener = surfaceTextureListener
+//        }
     }
 
     override fun onPause() {
-        stopBackgroundThread()
+    //    stopBackgroundThread()
         super.onPause()
     }
 
 
-    private fun setRearFacingCameraId() {
-
+    private fun setupCamera() {
         val cameraIds: Array<String> = cameraManager.cameraIdList
 
         for (id in cameraIds) {
@@ -105,10 +98,13 @@ class MainActivity : AppCompatActivity() {
                 continue
             }
 
-            val streamConfigurationMap : StreamConfigurationMap? = cameraCharacteristics.get(
-                CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP
-            )
-            previewSize = streamConfigurationMap?.getOutputSizes(SurfaceTexture::class.java)!!
+            val streamConfigurationMap : StreamConfigurationMap? = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+
+            if (streamConfigurationMap != null) {
+                previewSize = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!.getOutputSizes(ImageFormat.JPEG).maxBy { it.height * it.width }!!
+                imageReader = ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.JPEG, 1)
+                imageReader.setOnImageAvailableListener(onImageAvailableListener, backgroundHandler)
+            }
             cameraId = id
         }
     }
@@ -129,8 +125,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            setRearFacingCameraId()
-            cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
+            surfaceTextureListener.onSurfaceTextureAvailable(textureView.surfaceTexture!!, textureView.width, textureView.height)
         } else {
             Toast.makeText(
                 this,
@@ -166,11 +161,12 @@ class MainActivity : AppCompatActivity() {
     private val surfaceTextureListener = object : TextureView.SurfaceTextureListener {
         @SuppressLint("MissingPermission")
         override fun onSurfaceTextureAvailable(texture: SurfaceTexture, width: Int, height: Int) {
-            setRearFacingCameraId()
-            imageReader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1)
-            imageReader.setOnImageAvailableListener(onImageAvailableListener, backgroundHandler)
-            cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
+            if (wasCameraPermissionWasGiven()) {
+                setupCamera()
+                cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
+            }
         }
+
         override fun onSurfaceTextureSizeChanged(texture: SurfaceTexture, width: Int, height: Int) {
 
         }
@@ -192,13 +188,14 @@ class MainActivity : AppCompatActivity() {
         override fun onOpened(camera: CameraDevice) {
             cameraDevice = camera
             val surfaceTexture : SurfaceTexture? = textureView.surfaceTexture
-            surfaceTexture?.setDefaultBufferSize(previewSize[0].width, previewSize[0].height)
+            surfaceTexture?.setDefaultBufferSize(previewSize.width, previewSize.height)
             val previewSurface: Surface = Surface(surfaceTexture)
 
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
             captureRequestBuilder.addTarget(previewSurface)
+//            captureRequestBuilder.addTarget(imageReader.surface)
 
-            cameraDevice.createCaptureSession(listOf(previewSurface), captureStateCallback, null)
+            cameraDevice.createCaptureSession(listOf(previewSurface, imageReader.surface), captureStateCallback, null)
         }
 
         override fun onDisconnected(cameraDevice: CameraDevice) {
