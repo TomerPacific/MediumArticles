@@ -73,12 +73,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        startBackgroundThread()
-//        if (textureView.isAvailable) {
-//            setupCamera()
-//        } else {
-//            textureView.surfaceTextureListener = surfaceTextureListener
-//        }
+        startBackgroundThread()
+        if (textureView.isAvailable) {
+            setupCamera()
+        } else {
+            textureView.surfaceTextureListener = surfaceTextureListener
+        }
     }
 
     override fun onPause() {
@@ -281,6 +281,7 @@ class MainActivity : AppCompatActivity() {
         override fun onImageAvailable(reader: ImageReader) {
             Toast.makeText(this@MainActivity, "Photo Taken!", Toast.LENGTH_SHORT).show()
             val image: Image = reader.acquireLatestImage()
+            image.close()
         }
     }
 }
