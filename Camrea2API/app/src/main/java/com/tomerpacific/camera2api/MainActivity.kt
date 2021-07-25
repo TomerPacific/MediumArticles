@@ -12,6 +12,7 @@ import android.hardware.camera2.params.StreamConfigurationMap
 import android.media.Image
 import android.media.ImageReader
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraCaptureSession: CameraCaptureSession
     private lateinit var imageReader: ImageReader
     private lateinit var previewSize: Size
+    private var shouldProceedWithOnResume: Boolean = true
     private var orientations : SparseIntArray = SparseIntArray(4).apply {
         append(Surface.ROTATION_0, 0)
         append(Surface.ROTATION_90, 90)
@@ -71,21 +73,17 @@ class MainActivity : AppCompatActivity() {
         startBackgroundThread()
     }
 
+    @SuppressLint("MissingPermission")
     override fun onResume() {
         super.onResume()
         startBackgroundThread()
-        if (textureView.isAvailable) {
+        if (textureView.isAvailable && shouldProceedWithOnResume) {
             setupCamera()
-        } else {
+        } else if (!textureView.isAvailable){
             textureView.surfaceTextureListener = surfaceTextureListener
         }
+        shouldProceedWithOnResume = !shouldProceedWithOnResume
     }
-
-    override fun onPause() {
-    //    stopBackgroundThread()
-        super.onPause()
-    }
-
 
     private fun setupCamera() {
         val cameraIds: Array<String> = cameraManager.cameraIdList
@@ -101,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             val streamConfigurationMap : StreamConfigurationMap? = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
 
             if (streamConfigurationMap != null) {
-                previewSize = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!.getOutputSizes(ImageFormat.JPEG).maxBy { it.height * it.width }!!
+                previewSize = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!.getOutputSizes(ImageFormat.JPEG).maxByOrNull { it.height * it.width }!!
                 imageReader = ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.JPEG, 1)
                 imageReader.setOnImageAvailableListener(onImageAvailableListener, backgroundHandler)
             }
@@ -153,6 +151,10 @@ class MainActivity : AppCompatActivity() {
         cameraCaptureSession.capture(captureRequestBuilder.build(), captureCallback, null)
     }
 
+    @SuppressLint("MissingPermission")
+    private fun connectCamera() {
+        cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
+    }
 
     /**
      * Surface Texture Listener
@@ -163,7 +165,7 @@ class MainActivity : AppCompatActivity() {
         override fun onSurfaceTextureAvailable(texture: SurfaceTexture, width: Int, height: Int) {
             if (wasCameraPermissionWasGiven()) {
                 setupCamera()
-                cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
+                connectCamera()
             }
         }
 
@@ -193,7 +195,6 @@ class MainActivity : AppCompatActivity() {
 
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
             captureRequestBuilder.addTarget(previewSurface)
-//            captureRequestBuilder.addTarget(imageReader.surface)
 
             cameraDevice.createCaptureSession(listOf(previewSurface, imageReader.surface), captureStateCallback, null)
         }
@@ -239,6 +240,7 @@ class MainActivity : AppCompatActivity() {
         }
         override fun onConfigured(session: CameraCaptureSession) {
             cameraCaptureSession = session
+
             cameraCaptureSession.setRepeatingRequest(
                 captureRequestBuilder.build(),
                 null,
