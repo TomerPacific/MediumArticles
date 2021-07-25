@@ -11,6 +11,7 @@ import android.hardware.camera2.*
 import android.hardware.camera2.params.StreamConfigurationMap
 import android.media.Image
 import android.media.ImageReader
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +27,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraCaptureSession: CameraCaptureSession
     private lateinit var imageReader: ImageReader
     private lateinit var previewSize: Size
+    private lateinit var videoSize: Size
     private var shouldProceedWithOnResume: Boolean = true
     private var orientations : SparseIntArray = SparseIntArray(4).apply {
         append(Surface.ROTATION_0, 0)
@@ -51,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         append(Surface.ROTATION_180, 180)
         append(Surface.ROTATION_270, 270)
     }
+
+    private lateinit var mediaRecorder: MediaRecorder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +69,13 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener {
                 takePhoto()
             }
+        }
 
+        findViewById<Button>(R.id.record_video_btn).apply {
+            setOnClickListener {
+                mediaRecorder = MediaRecorder()
+                setupMediaRecorder()
+            }
         }
 
         if (!wasCameraPermissionWasGiven()) {
@@ -99,6 +111,7 @@ class MainActivity : AppCompatActivity() {
 
             if (streamConfigurationMap != null) {
                 previewSize = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!.getOutputSizes(ImageFormat.JPEG).maxByOrNull { it.height * it.width }!!
+                videoSize = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!.getOutputSizes(MediaRecorder::class.java).maxByOrNull { it.height * it.width }!!
                 imageReader = ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.JPEG, 1)
                 imageReader.setOnImageAvailableListener(onImageAvailableListener, backgroundHandler)
             }
@@ -153,6 +166,17 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingPermission")
     private fun connectCamera() {
         cameraManager.openCamera(cameraId, cameraStateCallback, backgroundHandler)
+    }
+
+    private fun setupMediaRecorder() {
+        mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE)
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+        mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
+        mediaRecorder.setVideoSize(videoSize.width, videoSize.height)
+        mediaRecorder.setVideoFrameRate(30)
+        mediaRecorder.setOutputFile(createFile().absolutePath)
+        mediaRecorder.setVideoEncodingBitRate(10_000_000)
+        mediaRecorder.prepare()
     }
 
     /**
@@ -284,5 +308,14 @@ class MainActivity : AppCompatActivity() {
             val image: Image = reader.acquireLatestImage()
             image.close()
         }
+    }
+
+    /**
+     * File Creation
+     */
+
+    private fun createFile(): File {
+        val sdf = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS", Locale.US)
+        return File(filesDir, "VID_${sdf.format(Date())}.mp4")
     }
 }
