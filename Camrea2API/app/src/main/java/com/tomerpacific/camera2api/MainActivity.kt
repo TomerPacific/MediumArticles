@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var mediaRecorder: MediaRecorder
+    private var isRecording: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,9 +74,16 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.record_video_btn).apply {
             setOnClickListener {
-                mediaRecorder = MediaRecorder()
-                setupMediaRecorder()
-                startRecording()
+                if (isRecording) {
+                    mediaRecorder.stop()
+                    mediaRecorder.reset()
+                } else {
+                    mediaRecorder = MediaRecorder()
+                    setupMediaRecorder()
+                    startRecording()
+                }
+
+                isRecording = !isRecording
             }
         }
 
