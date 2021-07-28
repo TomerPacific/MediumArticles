@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener {
                 mediaRecorder = MediaRecorder()
                 setupMediaRecorder()
+                startRecording()
             }
         }
 
@@ -179,6 +180,18 @@ class MainActivity : AppCompatActivity() {
         mediaRecorder.prepare()
     }
 
+    private fun startRecording() {
+        val surfaceTexture : SurfaceTexture? = textureView.surfaceTexture
+        surfaceTexture?.setDefaultBufferSize(previewSize.width, previewSize.height)
+        val previewSurface: Surface = Surface(surfaceTexture)
+        val recordingSurface = mediaRecorder.surface
+        captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_RECORD)
+        captureRequestBuilder.addTarget(previewSurface)
+        captureRequestBuilder.addTarget(recordingSurface)
+
+        cameraDevice.createCaptureSession(listOf(previewSurface, recordingSurface), captureStateVideoCallback, backgroundHandler)
+    }
+
     /**
      * Surface Texture Listener
      */
@@ -269,6 +282,29 @@ class MainActivity : AppCompatActivity() {
                 null,
                 backgroundHandler
             )
+        }
+    }
+
+    private val captureStateVideoCallback = object : CameraCaptureSession.StateCallback() {
+        override fun onConfigureFailed(session: CameraCaptureSession) {
+            Log.e(TAG, "Configuration failed")
+        }
+        override fun onConfigured(session: CameraCaptureSession) {
+            cameraCaptureSession = session
+            captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureResult.CONTROL_AF_MODE_CONTINUOUS_VIDEO)
+            try {
+                cameraCaptureSession.setRepeatingRequest(
+                    captureRequestBuilder.build(), null,
+                    backgroundHandler
+                )
+                mediaRecorder.start()
+            } catch (e: CameraAccessException) {
+                e.printStackTrace()
+                Log.e(TAG, "Failed to start camera preview because it couldn't access the camera")
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+            }
+
         }
     }
 
