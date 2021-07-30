@@ -88,3 +88,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 42. [Constructors In Dart](https://www.freecodecamp.org/news/constructors-in-dart/)
 
 ### 43. [Local Notifications In Flutter](https://medium.com/flutter-community/local-notifications-in-flutter-746eb1d606c6)
+
+### 44. [Camera2 API](https://www.freecodecamp.org/news/android-camera2-api-take-photos-and-videos/)
