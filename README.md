@@ -89,7 +89,7 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 43. [Local Notifications In Flutter](https://medium.com/flutter-community/local-notifications-in-flutter-746eb1d606c6)
 
-### 44. [Camera2 API](https://www.freecodecamp.org/news/android-camera2-api-take-photos-and-videos/)
+### 44. [Camera2 API](https://proandroiddev.com/camera2-everything-you-wanted-to-know-2501f9fd846a)
 
 ### 45. [GitHub Actions](https://proandroiddev.com/automating-your-android-development-using-github-actions-aad6c6ec9ea2)
 
