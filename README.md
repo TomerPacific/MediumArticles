@@ -93,3 +93,4 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 45. [GitHub Actions](https://proandroiddev.com/automating-your-android-development-using-github-actions-aad6c6ec9ea2)
 
+### 46. [How Aspiration Killed My Motivation](https://hackernoon.com/how-aspiration-killed-my-motivation)
