@@ -57,7 +57,7 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 27. [How To Approach A Coding Task](https://medium.com/better-programming/how-to-approach-a-coding-task-15178b7f04fa)
 
-### 28. [Anroid Storage](https://android.jlelse.eu/android-memory-cd45b82c0995)
+### 28. [Android Storage](https://android.jlelse.eu/android-memory-cd45b82c0995)
 
 ### 29. [How Expo Is Fooling Everyone](https://medium.com/better-programming/how-expo-is-fooling-everyone-adf7f34d7528)
 
