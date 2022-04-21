@@ -96,3 +96,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 46. [How Aspiration Killed My Motivation](https://hackernoon.com/how-aspiration-killed-my-motivation)
 
 ### 47. [Custom Icons In Flutter](https://medium.com/flutter-community/how-to-add-custom-icons-to-your-flutter-application-463dbd35fd39)
+
+### 48. [The State Of The Flutter](https://medium.com/flutter-community/the-state-of-the-flutter-4a178325cced)
