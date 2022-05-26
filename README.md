@@ -99,4 +99,4 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 48. [The State Of The Flutter](https://medium.com/flutter-community/the-state-of-the-flutter-4a178325cced)
 
-### 49. [Detecting ANRs In Your Application](https://www.freecodecamp.org/news/detect-application-not-responding-errors-in-your-application/)
+### 49. [Detecting ANRs In Your Application](https://proandroiddev.com/detecting-anrs-in-your-application-f7ee90fa3cfd)
