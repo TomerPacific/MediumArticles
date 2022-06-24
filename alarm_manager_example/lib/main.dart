@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Alarm Manager Example',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: const MyHomePage(title: 'Alarm Manager Example'),
     );
@@ -33,6 +33,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  final int _oneShotTaskId = 1;
+  final int _periodicTaskId = 2;
+
+  static void _oneShotTaskCallback() {
+    print("One Shot Task Running");
+  }
+
+  static void _periodicTaskCallback() {
+    print("Periodic Task Running");
+  }
+
+  void _scheduleOneShotAlarm() async {
+    await AndroidAlarmManager.oneShot(const Duration(seconds: 10), _oneShotTaskId, _oneShotTaskCallback);
+  }
+
+  void _schedulePeriodicAlarm() async {
+    await AndroidAlarmManager.periodic(const Duration(seconds: 10), _periodicTaskId, _periodicTaskCallback);
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -43,10 +63,24 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-              Text(
+          children: <Widget>[
+              const Text(
               'Alarm Manager Example',
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton(onPressed: _scheduleOneShotAlarm,
+                    child: const Text(
+                      "One Shot"
+                  )
+                ),
+                TextButton(onPressed: _schedulePeriodicAlarm,
+                    child: const Text(
+                        "Periodic"
+                    ))
+              ],
+            )
           ],
         ),
       ),
