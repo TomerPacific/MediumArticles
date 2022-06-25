@@ -34,23 +34,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final int _oneShotTaskId = 1;
-  final int _periodicTaskId = 2;
+  final int _oneShotAtTaskId = 2;
+  final int _periodicTaskId = 3;
 
   static void _oneShotTaskCallback() {
     print("One Shot Task Running");
+  }
+
+  static void _oneShotAtTaskCallback() {
+    print("One Shot At Task Running");
   }
 
   static void _periodicTaskCallback() {
     print("Periodic Task Running");
   }
 
-  void _scheduleOneShotAlarm() async {
-    await AndroidAlarmManager.oneShot(const Duration(seconds: 10), _oneShotTaskId, _oneShotTaskCallback);
+  void _scheduleOneShotAlarm(bool isTimed) async {
+    if (isTimed) {
+      await AndroidAlarmManager.oneShotAt(DateTime.now(), _oneShotAtTaskId, _oneShotAtTaskCallback);
+    } else {
+      await AndroidAlarmManager.oneShot(const Duration(seconds: 10), _oneShotTaskId, _oneShotTaskCallback);
+    }
   }
 
   void _schedulePeriodicAlarm() async {
     await AndroidAlarmManager.periodic(const Duration(seconds: 10), _periodicTaskId, _periodicTaskCallback);
-
   }
 
   @override
@@ -70,15 +78,26 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                TextButton(onPressed: _scheduleOneShotAlarm,
-                    child: const Text(
+                TextButton(
+                    onPressed: () {
+                      _scheduleOneShotAlarm(false);
+                    },
+                      child: const Text(
                       "One Shot"
                   )
+                ),
+                TextButton(onPressed: () {
+                  _scheduleOneShotAlarm(true);
+                },
+                    child: const Text(
+                        "Timed One Shot"
+                    )
                 ),
                 TextButton(onPressed: _schedulePeriodicAlarm,
                     child: const Text(
                         "Periodic"
-                    ))
+                    )
+                )
               ],
             )
           ],
