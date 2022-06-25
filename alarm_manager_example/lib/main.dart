@@ -77,30 +77,51 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                    onPressed: () {
-                      _scheduleOneShotAlarm(false);
-                    },
-                      child: const Text(
-                      "One Shot"
-                  )
+                Container(
+                  margin: const EdgeInsets.only(left: 15),
+                  child:  SizedBox(
+                    width: 90,
+                    height: 50,
+                    child: ElevatedButton.icon(
+                        onPressed: () {
+                          _scheduleOneShotAlarm(false);
+                        },
+                        icon: const Icon(Icons.plus_one),
+                        label: const Text(
+                            "One Shot"
+                        )
+                    ),
+                  ),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                  _scheduleOneShotAlarm(true);
-                },
-                    child: const Text(
-                        "Timed One Shot"
-                    )
+                SizedBox(
+                  width: 120,
+                  height: 50,
+                  child: ElevatedButton.icon(
+                      onPressed: () {
+                        _scheduleOneShotAlarm(true);
+                      },
+                      icon: const Icon(Icons.calendar_today),
+                      label: const Text(
+                          "Timed One Shot"
+                      )
+                  ),
                 ),
-                ElevatedButton(
-                    onPressed: _schedulePeriodicAlarm,
-                    child: const Text(
-                        "Periodic"
-                    )
-                )
+                Container(
+                  margin: const EdgeInsets.only(right: 15),
+                  child: SizedBox(
+                    width: 112,
+                    height: 50,
+                    child:  ElevatedButton.icon(
+                        onPressed: _schedulePeriodicAlarm,
+                        icon: const Icon(Icons.watch_later_outlined),
+                        label: const Text(
+                            "Periodic"
+                        )
+                    ),
+                  ),
+                ),
               ],
             )
           ],
