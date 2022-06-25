@@ -70,15 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
               const Text(
               'Alarm Manager Example',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                TextButton(
+                ElevatedButton(
                     onPressed: () {
                       _scheduleOneShotAlarm(false);
                     },
@@ -86,14 +87,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       "One Shot"
                   )
                 ),
-                TextButton(onPressed: () {
+                ElevatedButton(
+                    onPressed: () {
                   _scheduleOneShotAlarm(true);
                 },
                     child: const Text(
                         "Timed One Shot"
                     )
                 ),
-                TextButton(onPressed: _schedulePeriodicAlarm,
+                ElevatedButton(
+                    onPressed: _schedulePeriodicAlarm,
                     child: const Text(
                         "Periodic"
                     )
