@@ -51,7 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _scheduleOneShotAlarm(bool isTimed) async {
     if (isTimed) {
-      await AndroidAlarmManager.oneShotAt(DateTime.now(), _oneShotAtTaskId, _oneShotAtTaskCallback);
+      DateTime chosenDate = await _chooseDate();
+      await AndroidAlarmManager.oneShotAt(chosenDate, _oneShotAtTaskId, _oneShotAtTaskCallback);
     } else {
       await AndroidAlarmManager.oneShot(const Duration(seconds: 10), _oneShotTaskId, _oneShotTaskCallback);
     }
@@ -59,6 +60,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _schedulePeriodicAlarm() async {
     await AndroidAlarmManager.periodic(const Duration(seconds: 10), _periodicTaskId, _periodicTaskCallback);
+  }
+
+  Future<DateTime> _chooseDate() async {
+    DateTime? chosenDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2022, 7),
+        lastDate: DateTime(2101));
+    if (chosenDate != null) {
+      return chosenDate;
+    }
+
+    return DateTime.now();
   }
 
   @override
