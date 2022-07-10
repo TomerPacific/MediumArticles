@@ -54,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
       DateTime chosenDate = await _chooseDate();
       await AndroidAlarmManager.oneShotAt(chosenDate, _oneShotAtTaskId, _oneShotAtTaskCallback);
     } else {
+      int duration = await _chooseDuration();
       await AndroidAlarmManager.oneShot(const Duration(seconds: 10), _oneShotTaskId, _oneShotTaskCallback);
     }
   }
@@ -62,13 +63,114 @@ class _MyHomePageState extends State<MyHomePage> {
     await AndroidAlarmManager.periodic(const Duration(seconds: 10), _periodicTaskId, _periodicTaskCallback);
   }
 
+  Future<int> _chooseDuration() async {
+    String duration = "";
+    String durationString = "seconds";
+    AlertDialog alert = AlertDialog(
+      title: const Text("Enter a number for duration"),
+      content:
+          StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: RadioListTile(
+                            title: const Text("Seconds"),
+                            value: "Seconds",
+                            groupValue: durationString,
+                            onChanged: (String? value) {
+                              if (value != null) {
+                                setState(() =>
+                                durationString = value
+                                );
+                              }
+                            }),
+                      ),
+                      Expanded(
+                        child: RadioListTile(
+                            title: const Text("Minutes"),
+                            value: "Minutes",
+                            groupValue: durationString,
+                            onChanged: (String? value) {
+                              if (value != null) {
+                                setState(() =>
+                                durationString = value
+                                );
+                              }
+                            }),
+                      ),
+                      Expanded(
+                        child: RadioListTile(
+                            title: const Text("Hours"),
+                            value: "Hours",
+                            groupValue: durationString,
+                            onChanged: (String? value) {
+                              if (value != null) {
+                                setState(() =>
+                                durationString = value
+                                );
+                              }
+                            }),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(child:
+                      TextField(
+                        maxLines: 1,
+                        keyboardType: TextInputType.number,
+                        onChanged: (String text) {
+                          duration = text;
+                        },
+                      ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
+      actions: [
+        TextButton(
+        onPressed: () {
+          Navigator.of(context).pop(duration);
+        },
+          child: const Text("Ok"),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text("Cancel"),
+        )
+      ],
+    );
+    
+    String? enteredText = await showDialog(
+        context: context,
+        builder: (context) {
+      return alert;
+    });
+
+    if (enteredText != null) {
+        return int.parse(enteredText);
+    }
+    return 0;
+  }
+
   Future<DateTime> _chooseDate() async {
     DateTime? chosenDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2022, 7),
         lastDate: DateTime(2101));
-    
+
     if (chosenDate != null) {
       return chosenDate;
     }
