@@ -74,9 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
               return  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
                       Expanded(
                         child: RadioListTile(
                             title: const Text("Seconds"),
@@ -116,8 +113,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               }
                             }),
                       ),
-                    ],
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
