@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,8 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
       DateTime chosenDate = await _chooseDate();
       await AndroidAlarmManager.oneShotAt(chosenDate, _oneShotAtTaskId, _oneShotAtTaskCallback);
     } else {
-      int duration = await _chooseDuration();
-      await AndroidAlarmManager.oneShot(const Duration(seconds: 10), _oneShotTaskId, _oneShotTaskCallback);
+      Duration duration = await _chooseDuration();
+      await AndroidAlarmManager.oneShot(duration, _oneShotTaskId, _oneShotTaskCallback);
     }
   }
 
@@ -63,11 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
     await AndroidAlarmManager.periodic(const Duration(seconds: 10), _periodicTaskId, _periodicTaskCallback);
   }
 
-  Future<int> _chooseDuration() async {
+  Future<Duration> _chooseDuration() async {
     String duration = "";
     String durationString = "seconds";
     AlertDialog alert = AlertDialog(
-      title: const Text("Enter a number for duration"),
+      title: const Text("Enter a number for the duration"),
       content:
           StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
@@ -120,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       TextField(
                         maxLines: 1,
                         keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         onChanged: (String text) {
                           duration = text;
                         },
@@ -154,9 +156,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     if (enteredText != null) {
-        return int.parse(enteredText);
+        int time = int.parse(enteredText);
+        if (durationString == "Seconds") {
+          return Duration(seconds: time);
+        } else if (durationString == "Minutes") {
+          return Duration(minutes: time);
+        } else {
+          return Duration(hours: time);
+        }
     }
-    return 0;
+    return const Duration(seconds: 0);
   }
 
   Future<DateTime> _chooseDate() async {
