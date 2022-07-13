@@ -62,7 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _schedulePeriodicAlarm() async {
-    await AndroidAlarmManager.periodic(const Duration(seconds: 10), _periodicTaskId, _periodicTaskCallback);
+    Duration duration = await _chooseDuration();
+    await AndroidAlarmManager.periodic(duration, _periodicTaskId, _periodicTaskCallback);
   }
 
   Future<Duration> _chooseDuration() async {
