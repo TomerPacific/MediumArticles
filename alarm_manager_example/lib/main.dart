@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/services.dart';
+import 'constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,11 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Alarm Manager Example',
+      title: appName,
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const MyHomePage(title: 'Alarm Manager Example'),
+      home: const MyHomePage(title: appName),
     );
   }
 }
@@ -66,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<Duration> _chooseDuration() async {
     String duration = "";
-    String durationString = "seconds";
+    String durationString = durationSeconds;
     AlertDialog alert = AlertDialog(
       title: const Text("Enter a number for the duration"),
       content:
@@ -77,8 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                       Expanded(
                         child: RadioListTile(
-                            title: const Text("Seconds"),
-                            value: "Seconds",
+                            title: const Text(durationSeconds),
+                            value: durationSeconds,
                             groupValue: durationString,
                             onChanged: (String? value) {
                               if (value != null) {
@@ -90,8 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Expanded(
                         child: RadioListTile(
-                            title: const Text("Minutes"),
-                            value: "Minutes",
+                            title: const Text(durationMinutes),
+                            value: durationMinutes,
                             groupValue: durationString,
                             onChanged: (String? value) {
                               if (value != null) {
@@ -103,8 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Expanded(
                         child: RadioListTile(
-                            title: const Text("Hours"),
-                            value: "Hours",
+                            title: const Text(durationHours),
+                            value: durationHours,
                             groupValue: durationString,
                             onChanged: (String? value) {
                               if (value != null) {
@@ -157,9 +158,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (enteredText != null) {
         int time = int.parse(enteredText);
-        if (durationString == "Seconds") {
+        if (durationString == durationSeconds) {
           return Duration(seconds: time);
-        } else if (durationString == "Minutes") {
+        } else if (durationString == durationMinutes) {
           return Duration(minutes: time);
         } else {
           return Duration(hours: time);
@@ -194,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
               const Text(
-              'Alarm Manager Example',
+              appName,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Row(
@@ -211,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                         icon: const Icon(Icons.plus_one),
                         label: const Text(
-                            "One Shot"
+                            oneShotAlarm
                         )
                     ),
                   ),
@@ -225,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                       icon: const Icon(Icons.calendar_today),
                       label: const Text(
-                          "Timed One Shot"
+                          oneShotAtAlarm
                       )
                   ),
                 ),
@@ -238,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: _schedulePeriodicAlarm,
                         icon: const Icon(Icons.watch_later_outlined),
                         label: const Text(
-                            "Periodic"
+                            periodicAlarm
                         )
                     ),
                   ),
