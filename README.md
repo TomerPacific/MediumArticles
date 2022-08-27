@@ -106,3 +106,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 51. [Flutter Alarm Manager](https://medium.com/flutter-community/flutter-alarmmanager-f184671240cb)
 
 ### 52. [Is Jetpack Compose Ready For You?](https://medium.com/better-programming/is-jetpack-compose-ready-for-you-eae6c93ad3f8)
+
+### 53. [Google Play SDK Index Breakdown](https://proandroiddev.com/google-play-sdk-index-breakdown-6203000d9018)
