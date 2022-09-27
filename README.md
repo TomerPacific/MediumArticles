@@ -108,3 +108,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 52. [Is Jetpack Compose Ready For You?](https://medium.com/better-programming/is-jetpack-compose-ready-for-you-eae6c93ad3f8)
 
 ### 53. [Google Play SDK Index Breakdown](https://proandroiddev.com/google-play-sdk-index-breakdown-6203000d9018)
+
+### 54. [Heroku Alternatives](https://levelup.gitconnected.com/the-end-of-free-dynos-at-heroku-272fdf2d78c4)
