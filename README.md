@@ -110,3 +110,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 53. [Google Play SDK Index Breakdown](https://proandroiddev.com/google-play-sdk-index-breakdown-6203000d9018)
 
 ### 54. [Heroku Alternatives](https://levelup.gitconnected.com/the-end-of-free-dynos-at-heroku-272fdf2d78c4)
+
+### 55. [Flutter In App Update](https://medium.com/flutter-community/in-app-update-the-flutter-way-2f25e4a02c02)
