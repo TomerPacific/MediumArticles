@@ -11,14 +11,18 @@ import android.webkit.JavascriptInterface
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
+
+    private val JAVASCRIPT_BRIDGE_NAME: String = "myOwnJSHandler"
+    private val LOCAL_HTML_FILE_PATH = "file:///android_asset/index.html"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val webView = findViewById<View>(R.id.web_view) as WebView
         webView.apply {
             settings.javaScriptEnabled = true
-            addJavascriptInterface(WebViewJavascriptInterface(context), "myOwnJSHandler")
-            loadUrl("file:///android_asset/index.html")
+            addJavascriptInterface(WebViewJavascriptInterface(context), JAVASCRIPT_BRIDGE_NAME)
+            loadUrl(LOCAL_HTML_FILE_PATH)
         }
     }
 
