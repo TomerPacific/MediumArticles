@@ -8,8 +8,10 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
+    private val CUSTOM_INTENT_ACTION: String = "com.example.broadcast.MY_NOTIFICATION"
+
     private val receiver: MyBroadcastReceiver = MyBroadcastReceiver()
-    private val intentFilter: IntentFilter = IntentFilter("com.example.broadcast.MY_NOTIFICATION")
+    private val intentFilter: IntentFilter = IntentFilter(CUSTOM_INTENT_ACTION)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button?>(R.id.sendBroadcastBtn).apply {
             setOnClickListener {
                 val intent = Intent()
-                intent.action = "com.example.broadcast.MY_NOTIFICATION"
+                intent.action = CUSTOM_INTENT_ACTION
                 intent.putExtra("data", "Hello World!")
                 sendBroadcast(intent)
             }
