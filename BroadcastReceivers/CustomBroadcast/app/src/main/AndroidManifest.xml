@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MyBroadcastReceiver"  android:exported="true">
+        <receiver android:name=".MyBroadcastReceiver"  android:exported="false">
             <intent-filter>
                 <action android:name="com.example.broadcast.MY_NOTIFICATION" />
             </intent-filter>
