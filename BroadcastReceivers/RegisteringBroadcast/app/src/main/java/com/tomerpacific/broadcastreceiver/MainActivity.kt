@@ -10,15 +10,16 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
     private val myBroadcastReceiver: BroadcastReceiver = MyBroadcastReceiver()
+    private val ACTION_KEY: String = "MY_ACTION"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val intentFilter = IntentFilter("MY_ACTION")
+        val intentFilter = IntentFilter(ACTION_KEY)
         this.registerReceiver(myBroadcastReceiver, intentFilter)
         findViewById<Button?>(R.id.sendBroadcastBtn).apply {
             setOnClickListener(View.OnClickListener {
-                val intent = Intent("MY_ACTION")
+                val intent = Intent(ACTION_KEY)
                 intent.putExtra("data", "Hello World!")
                 sendBroadcast(intent)
             })
