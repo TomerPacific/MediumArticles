@@ -6,9 +6,10 @@ import android.content.Intent
 import android.widget.Toast
 
 class MyBroadcastReceiver : BroadcastReceiver() {
-    
+
     override fun onReceive(context: Context, intent: Intent) {
-        val data = intent.extras.getString("data")
-        Toast.makeText(context, "Broadcast Received with data $data", Toast.LENGTH_LONG).show()
+        intent.extras?.getString("data").let { data ->
+            Toast.makeText(context, "Broadcast Received with data $data", Toast.LENGTH_LONG).show()
+        }
     }
 }
