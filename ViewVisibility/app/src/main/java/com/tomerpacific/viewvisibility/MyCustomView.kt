@@ -2,14 +2,17 @@ package com.tomerpacific.viewvisibility
 
 import android.content.Context
 import android.graphics.Color
+import android.util.AttributeSet
 import android.util.Log
-import android.widget.LinearLayout
-import android.view.Gravity
 import android.view.View
-import android.widget.TextView
+import android.widget.LinearLayout
 
-class MyCustomView(context: Context?) : LinearLayout(context) {
+class MyCustomView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private val TAG = MyCustomView::class.java.simpleName
+
+    init {
+        setBackgroundColor(Color.GREEN)
+    }
 
     public override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
@@ -21,11 +24,4 @@ class MyCustomView(context: Context?) : LinearLayout(context) {
         Log.d(TAG, "Window visibility changed to $visibility")
     }
 
-    init {
-        setBackgroundColor(Color.GREEN)
-        this.gravity = Gravity.CENTER
-        val myTextView = TextView(context)
-        myTextView.text = "My Custom View"
-        addView(myTextView)
-    }
 }
