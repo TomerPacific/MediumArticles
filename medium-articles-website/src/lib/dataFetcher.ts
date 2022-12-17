@@ -1,14 +1,9 @@
 import type { Article } from './article'
 
-
 export function gatherMediumArticles(): Article[] {
     let articles: Article[]
 
-    fetch('https://github.com/TomerPacific/MediumArticles/blob/master/README.md', {
-        headers: {
-            "Access-Control-Allow-Origin": "https://tomerpacific.github.io"
-        },
-    })
+    fetch('https://raw.githubusercontent.com/tomerpacific/MediumArticles/master/README.md')
     .then(function(response) {
         return response.text()
     })
@@ -16,7 +11,6 @@ export function gatherMediumArticles(): Article[] {
         console.log(html)
         return articles
     }).catch(function(e) {
-        console.error(e)
         return []
     })
 
