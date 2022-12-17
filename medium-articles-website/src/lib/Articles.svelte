@@ -1,9 +1,10 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { articles } from './AppStore'
+    import { articles } from './AppStore';
+    import { gatherMediumArticles } from './dataFetcher';
 
     onMount(() => {
-        
+        $articles = gatherMediumArticles()
     })
 </script>
 
