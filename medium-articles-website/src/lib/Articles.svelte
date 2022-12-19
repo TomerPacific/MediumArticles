@@ -4,7 +4,9 @@
     import { gatherMediumArticles } from './dataFetcher';
 
     onMount(() => {
-        $articles = gatherMediumArticles()
+        gatherMediumArticles().then(function(data) {
+            $articles = data
+        })
     })
 </script>
 
@@ -12,7 +14,7 @@
     <div id="grid-container">
         {#each $articles as article}
             <div class="grid-item">
-                
+                <a href={article.url}><h3>{article.title}</h3></a>
             </div>
         {/each}
     </div>
