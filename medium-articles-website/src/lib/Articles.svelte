@@ -14,7 +14,9 @@
     <div id="grid-container">
         {#each $articles as article}
             <div class="grid-item">
-                <a href={article.url}><h3>{article.title}</h3></a>
+                <h3>
+                    <a href="{article.url}" title="{article.title}">{article.title}</a>
+                </h3>
             </div>
         {/each}
     </div>
@@ -24,7 +26,12 @@
 <style>
     #grid-container {
         display: grid;
-        grid: auto auto auto;
+        grid-template-columns: auto auto auto;
         grid-gap: 1%;
+    }
+
+    .grid-item {
+        border: 2px solid black;
+        margin: 1%;
     }
 </style>
