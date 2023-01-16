@@ -112,3 +112,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 54. [Heroku Alternatives](https://levelup.gitconnected.com/the-end-of-free-dynos-at-heroku-272fdf2d78c4)
 
 ### 55. [Flutter In App Update](https://medium.com/flutter-community/in-app-update-the-flutter-way-2f25e4a02c02)
+
+### 56. [Hide Your API Keys In Android](https://proandroiddev.com/hide-your-api-keys-in-android-d4c52446d0bc)
