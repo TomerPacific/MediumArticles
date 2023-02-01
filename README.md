@@ -114,3 +114,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 55. [Flutter In App Update](https://medium.com/flutter-community/in-app-update-the-flutter-way-2f25e4a02c02)
 
 ### 56. [Hide Your API Keys In Android](https://proandroiddev.com/hide-your-api-keys-in-android-d4c52446d0bc)
+
+### 57. [Serialization with Kotlin and Jetpack Compose](https://levelup.gitconnected.com/serialization-with-kotlin-and-jetpack-compose-3ab36055fd59)
