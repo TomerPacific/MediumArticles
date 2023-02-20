@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.tomerpacific.jetpackcomposetabs.ui.theme.JetpackComposeTabsTheme
+import com.tomerpacific.jetpackcomposetabs.ui.view.TabLayout
 
 class MainActivity : ComponentActivity() {
 
