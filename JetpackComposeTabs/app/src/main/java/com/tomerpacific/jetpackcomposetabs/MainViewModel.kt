@@ -12,8 +12,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateTabIndexBasedOnSwipe(isSwipeToTheLeft: Boolean) {
         tabIndex.value = when (isSwipeToTheLeft) {
-            true -> Math.floorMod(tabIndex.value!!.plus(1), 6)
-            false -> Math.floorMod(tabIndex.value!!.minus(1), 6)
+            true -> Math.floorMod(tabIndex.value!!.plus(1), 3)
+            false -> Math.floorMod(tabIndex.value!!.minus(1), 3)
         }
     }
 
