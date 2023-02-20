@@ -32,7 +32,9 @@ fun TabLayout(viewModel: MainViewModel) {
         }
 
         when (tabIndex.value) {
-
+            0 -> HomeScreen(viewModel = viewModel)
+            1 -> AboutScreen(viewModel = viewModel)
+            2 -> SettingsScreen(viewModel = viewModel)
         }
     }
 }
