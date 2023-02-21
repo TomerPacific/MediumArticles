@@ -17,7 +17,7 @@ fun TabLayout(viewModel: MainViewModel) {
         TabRow(selectedTabIndex = tabIndex.value!!) {
             viewModel.tabs.forEachIndexed { index, title ->
                 Tab(text = { Text(title) },
-                    selected =tabIndex.value!! == index,
+                    selected = tabIndex.value!! == index,
                     onClick = { viewModel.updateTabIndex(index) },
                     icon = {
                         when (index) {
