@@ -1,6 +1,5 @@
 package com.tomerpacific.jetpackcomposetabs.ui.view
 
-import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
