@@ -12,11 +12,10 @@ import com.tomerpacific.jetpackcomposetabs.MainViewModel
 
 @Composable
 fun TabLayout(viewModel: MainViewModel) {
-    val tabs = listOf("Home", "About", "Settings")
     val tabIndex = viewModel.index.observeAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(selectedTabIndex = tabIndex.value!!) {
-            tabs.forEachIndexed { index, title ->
+            viewModel.tabs.forEachIndexed { index, title ->
                 Tab(text = { Text(title) },
                     selected =tabIndex.value!! == index,
                     onClick = { viewModel.updateTabIndex(index) },
