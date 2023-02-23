@@ -1,9 +1,7 @@
 package com.tomerpacific.jetpackcomposetabs.ui.view
 
-import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,17 +18,13 @@ import com.tomerpacific.jetpackcomposetabs.MainViewModel
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
 
-    var isDragToTheLeft by remember { mutableStateOf(false) }
-    val dragState = rememberDraggableState(onDelta = { delta ->
-        isDragToTheLeft = delta > 0
-    })
 
     Column(modifier = Modifier.fillMaxSize().draggable(
-        state = dragState,
+        state = viewModel.st.value!!,
         orientation = Orientation.Horizontal,
         onDragStarted = {  },
         onDragStopped = {
-            viewModel.updateTabIndexBasedOnSwipe(isSwipeToTheLeft = isDragToTheLeft)
+            viewModel.updateTabIndexBasedOnSwipe()
         }),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
