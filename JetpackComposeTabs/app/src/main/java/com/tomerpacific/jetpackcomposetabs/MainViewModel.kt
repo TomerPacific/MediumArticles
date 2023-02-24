@@ -8,27 +8,27 @@ import androidx.lifecycle.MutableLiveData
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val tabIndex: MutableLiveData<Int> = MutableLiveData(0)
-    val index: LiveData<Int> = tabIndex
+    private val _tabIndex: MutableLiveData<Int> = MutableLiveData(0)
+    val tabIndex: LiveData<Int> = _tabIndex
     val tabs = listOf("Home", "About", "Settings")
 
     var isDragToTheLeft: Boolean = false
-    private val state = DraggableState { delta ->
+    private val draggableState = DraggableState { delta ->
         isDragToTheLeft = delta > 0
     }
 
-    private val dragState = MutableLiveData<DraggableState>(state)
-    val st: LiveData<DraggableState> = dragState
+    private val _dragState = MutableLiveData<DraggableState>(draggableState)
+    val dragState: LiveData<DraggableState> = _dragState
 
     fun updateTabIndexBasedOnSwipe() {
-        tabIndex.value = when (isDragToTheLeft) {
-            true -> Math.floorMod(tabIndex.value!!.plus(1), tabs.size)
-            false -> Math.floorMod(tabIndex.value!!.minus(1), tabs.size)
+        _tabIndex.value = when (isDragToTheLeft) {
+            true -> Math.floorMod(_tabIndex.value!!.plus(1), tabs.size)
+            false -> Math.floorMod(_tabIndex.value!!.minus(1), tabs.size)
         }
     }
 
     fun updateTabIndex(i: Int) {
-        tabIndex.value = i
+        _tabIndex.value = i
     }
 
 }
