@@ -19,7 +19,7 @@ import com.tomerpacific.jetpackcomposetabs.MainViewModel
 fun SettingsScreen(viewModel: MainViewModel) {
 
     Column(modifier = Modifier.fillMaxSize().draggable(
-        state = viewModel.st.value!!,
+        state = viewModel.dragState.value!!,
         orientation = Orientation.Horizontal,
         onDragStarted = {  },
         onDragStopped = {

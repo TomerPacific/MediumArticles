@@ -12,7 +12,7 @@ import com.tomerpacific.jetpackcomposetabs.MainViewModel
 
 @Composable
 fun TabLayout(viewModel: MainViewModel) {
-    val tabIndex = viewModel.index.observeAsState()
+    val tabIndex = viewModel.tabIndex.observeAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(selectedTabIndex = tabIndex.value!!) {
             viewModel.tabs.forEachIndexed { index, title ->
