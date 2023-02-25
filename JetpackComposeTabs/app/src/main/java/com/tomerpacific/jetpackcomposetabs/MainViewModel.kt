@@ -12,16 +12,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val tabIndex: LiveData<Int> = _tabIndex
     val tabs = listOf("Home", "About", "Settings")
 
-    var isDragToTheLeft: Boolean = false
+    var isSwipeToTheLeft: Boolean = false
     private val draggableState = DraggableState { delta ->
-        isDragToTheLeft = delta > 0
+        isSwipeToTheLeft = delta > 0
     }
 
     private val _dragState = MutableLiveData<DraggableState>(draggableState)
     val dragState: LiveData<DraggableState> = _dragState
 
     fun updateTabIndexBasedOnSwipe() {
-        _tabIndex.value = when (isDragToTheLeft) {
+        _tabIndex.value = when (isSwipeToTheLeft) {
             true -> Math.floorMod(_tabIndex.value!!.plus(1), tabs.size)
             false -> Math.floorMod(_tabIndex.value!!.minus(1), tabs.size)
         }
