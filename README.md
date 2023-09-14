@@ -118,3 +118,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 57. [Serialization with Kotlin and Jetpack Compose](https://levelup.gitconnected.com/serialization-with-kotlin-and-jetpack-compose-3ab36055fd59)
 
 ### 58. [Tabs In Jetpack Compose](https://proandroiddev.com/tabs-in-jetpack-compose-81b1496c97dc)
+
+### 59. [Firebase Remote Configurations](https://medium.com/p/ff1d7161bb01#4817-54e24931e939)
