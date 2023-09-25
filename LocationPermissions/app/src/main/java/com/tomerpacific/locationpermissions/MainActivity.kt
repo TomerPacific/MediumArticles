@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -16,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,15 +27,14 @@ import com.tomerpacific.locationpermissions.ui.theme.LocationPermissionsTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
 
-            val shouldShowPermissionRationale by viewModel.shouldShowPermissionRationale.observeAsState()
             val locationPermissionsAlreadyGranted by remember { mutableStateOf(checkPermission()) }
             var showDialog by remember {mutableStateOf(false)}
+            var shouldShowPermissionRationale by remember { mutableStateOf(false) }
 
             val locationPermissions = arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -49,8 +46,9 @@ class MainActivity : ComponentActivity() {
                     val permissionsGranted = permissions.values.reduce { acc, b ->
                         acc && b
                     }
-                    viewModel.setShouldShowPermissionRationale(!permissionsGranted)
+                    
                     if (!permissionsGranted) {
+                        shouldShowPermissionRationale = true
                         showDialog = true
                     }
                 })
@@ -74,9 +72,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    if (shouldShowPermissionRationale != null &&
-                        shouldShowPermissionRationale == true &&
-                        showDialog) {
+                    if (shouldShowPermissionRationale && showDialog) {
                         AlertDialog(
                             onDismissRequest = {
                                 showDialog = false
