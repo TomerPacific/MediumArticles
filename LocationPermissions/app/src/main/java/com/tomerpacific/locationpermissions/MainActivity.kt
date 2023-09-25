@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
             val locationPermissionsAlreadyGranted by remember { mutableStateOf(checkPermission()) }
             var showDialog by remember {mutableStateOf(false)}
-            var shouldShowPermissionRationale by remember { mutableStateOf(false) }
+            var shouldShowPermissionRationale by remember { mutableStateOf(shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) }
 
             val locationPermissions = arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -46,9 +46,9 @@ class MainActivity : ComponentActivity() {
                     val permissionsGranted = permissions.values.reduce { acc, b ->
                         acc && b
                     }
-                    
+
                     if (!permissionsGranted) {
-                        shouldShowPermissionRationale = true
+                        shouldShowPermissionRationale = shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
                         showDialog = true
                     }
                 })
