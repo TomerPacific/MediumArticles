@@ -54,6 +54,10 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
+            var shouldDirectUserToApplicationSettings by remember {
+                mutableStateOf(false)
+            }
+
             val locationPermissions = arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -71,6 +75,7 @@ class MainActivity : ComponentActivity() {
                             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
                         showDialog = true
                     }
+                    shouldDirectUserToApplicationSettings = !shouldShowPermissionRationale && !permissionsGranted
                 })
 
             val lifecycleOwner = LocalLifecycleOwner.current
@@ -122,11 +127,10 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             }
-                            //Condition fits for when application before first asking for permissions and when user chooses never to ask for permissions
                         }
-//                        else if (!locationPermissionsAlreadyGranted && !shouldShowPermissionRationale) {
-//                            openApplicationSettings()
-//                        }
+                        if (shouldDirectUserToApplicationSettings) {
+                            openApplicationSettings()
+                        }
                     }
                 }
             }
