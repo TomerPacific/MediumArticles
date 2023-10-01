@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            val locationPermissionsAlreadyGranted by remember { mutableStateOf(isLocationPermissionIsAlreadyGranted()) }
+            var locationPermissionsGranted by remember { mutableStateOf(isLocationPermissionIsAlreadyGranted()) }
             var showDialog by remember { mutableStateOf(false) }
             var shouldShowPermissionRationale by remember {
                 mutableStateOf(
@@ -66,23 +66,23 @@ class MainActivity : ComponentActivity() {
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.RequestMultiplePermissions(),
                 onResult = { permissions ->
-                    val permissionsGranted = permissions.values.reduce { acc, isPermissionGranted ->
+                    locationPermissionsGranted = permissions.values.reduce { acc, isPermissionGranted ->
                         acc && isPermissionGranted
                     }
 
-                    if (!permissionsGranted) {
+                    if (!locationPermissionsGranted) {
                         shouldShowPermissionRationale =
                             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
                         showDialog = true
                     }
-                    shouldDirectUserToApplicationSettings = !shouldShowPermissionRationale && !permissionsGranted
+                    shouldDirectUserToApplicationSettings = !shouldShowPermissionRationale && !locationPermissionsGranted
                 })
 
             val lifecycleOwner = LocalLifecycleOwner.current
             DisposableEffect(key1 = lifecycleOwner, effect = {
                 val observer = LifecycleEventObserver { _, event ->
                     if (event == Lifecycle.Event.ON_START &&
-                        !locationPermissionsAlreadyGranted &&
+                        !locationPermissionsGranted &&
                         !shouldShowPermissionRationale) {
                         launcher.launch(locationPermissions)
                     }
