@@ -62,8 +62,8 @@ class MainActivity : ComponentActivity() {
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.RequestMultiplePermissions(),
                 onResult = { permissions ->
-                    val permissionsGranted = permissions.values.reduce { acc, b ->
-                        acc && b
+                    val permissionsGranted = permissions.values.reduce { acc, isPermissionGranted ->
+                        acc && isPermissionGranted
                     }
 
                     if (!permissionsGranted) {
@@ -115,7 +115,6 @@ class MainActivity : ComponentActivity() {
                                         SnackbarResult.ActionPerformed -> {
                                             shouldShowPermissionRationale = false
                                             launcher.launch(locationPermissions)
-                                            //openApplicationSettings()
                                         }
                                         SnackbarResult.Dismissed -> {
                                             shouldShowPermissionRationale = false
