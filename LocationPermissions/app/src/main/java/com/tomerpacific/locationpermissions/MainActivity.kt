@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            val locationPermissionsAlreadyGranted by remember { mutableStateOf(checkPermission()) }
+            val locationPermissionsAlreadyGranted by remember { mutableStateOf(isLocationPermissionIsAlreadyGranted()) }
             var showDialog by remember { mutableStateOf(false) }
             var shouldShowPermissionRationale by remember {
                 mutableStateOf(
@@ -137,7 +137,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun checkPermission(): Boolean {
+    private fun isLocationPermissionIsAlreadyGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
