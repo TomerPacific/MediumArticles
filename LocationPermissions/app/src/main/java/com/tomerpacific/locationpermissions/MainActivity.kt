@@ -10,7 +10,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,7 +35,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -59,6 +63,10 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(false)
             }
 
+            var currentPermissionsStatus by remember {
+                mutableStateOf(decideCurrentPermissionStatus(locationPermissionsGranted, shouldShowPermissionRationale))
+            }
+
             val locationPermissions = arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -76,6 +84,7 @@ class MainActivity : ComponentActivity() {
                             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
                     }
                     shouldDirectUserToApplicationSettings = !shouldShowPermissionRationale && !locationPermissionsGranted
+                    currentPermissionsStatus = decideCurrentPermissionStatus(locationPermissionsGranted, shouldShowPermissionRationale)
                 })
 
             val lifecycleOwner = LocalLifecycleOwner.current
@@ -105,14 +114,23 @@ class MainActivity : ComponentActivity() {
                     Scaffold(snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState)
                     }) { contentPadding ->
-                        Box(Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(modifier = Modifier.padding(contentPadding).fillMaxWidth(),
+                        Column(modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally){
+                            Text(modifier = Modifier
+                                .padding(contentPadding)
+                                .fillMaxWidth(),
                                 text = "Location Permissions",
-                            textAlign = TextAlign.Center)
+                                textAlign = TextAlign.Center)
+                            Spacer(modifier = Modifier.padding(20.dp))
+                            Text(modifier = Modifier
+                                .padding(contentPadding)
+                                .fillMaxWidth(),
+                                text = "Current Permission Status: $currentPermissionsStatus",
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
-
                         if (shouldShowPermissionRationale) {
                             LaunchedEffect(Unit) {
                                 scope.launch {
@@ -153,5 +171,12 @@ class MainActivity : ComponentActivity() {
         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).also {
             startActivity(it)
         }
+    }
+
+    private fun decideCurrentPermissionStatus(locationPermissionsGranted: Boolean,
+                                              shouldShowPermissionRationale: Boolean): String {
+        return if (locationPermissionsGranted) "Granted"
+        else if (shouldShowPermissionRationale) "Rejected"
+        else "Denied"
     }
 }
