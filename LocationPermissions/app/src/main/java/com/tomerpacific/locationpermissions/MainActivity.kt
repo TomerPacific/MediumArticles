@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,8 +30,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.style.TextAlign
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -102,8 +105,14 @@ class MainActivity : ComponentActivity() {
                     Scaffold(snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState)
                     }) { contentPadding ->
-                        Text(modifier = Modifier.padding(contentPadding).fillMaxWidth(),
-                            text = "Location Permissions")
+                        Box(Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(modifier = Modifier.padding(contentPadding).fillMaxWidth(),
+                                text = "Location Permissions",
+                            textAlign = TextAlign.Center)
+                        }
+
                         if (shouldShowPermissionRationale) {
                             LaunchedEffect(Unit) {
                                 scope.launch {
