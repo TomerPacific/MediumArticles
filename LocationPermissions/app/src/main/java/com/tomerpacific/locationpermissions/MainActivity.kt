@@ -46,7 +46,6 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             var locationPermissionsGranted by remember { mutableStateOf(areLocationPermissionsAlreadyGranted()) }
-            var showDialog by remember { mutableStateOf(false) }
             var shouldShowPermissionRationale by remember {
                 mutableStateOf(
                     shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -72,7 +71,6 @@ class MainActivity : ComponentActivity() {
                     if (!locationPermissionsGranted) {
                         shouldShowPermissionRationale =
                             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
-                        showDialog = true
                     }
                     shouldDirectUserToApplicationSettings = !shouldShowPermissionRationale && !locationPermissionsGranted
                 })
