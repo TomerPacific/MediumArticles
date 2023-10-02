@@ -37,7 +37,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import com.tomerpacific.locationpermissions.ui.theme.LocationPermissionsTheme
 import kotlinx.coroutines.launch
 
-
 class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             )
 
-            val launcher = rememberLauncherForActivityResult(
+            val locationPermissionLauncher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.RequestMultiplePermissions(),
                 onResult = { permissions ->
                     locationPermissionsGranted = permissions.values.reduce { acc, isPermissionGranted ->
@@ -84,7 +83,7 @@ class MainActivity : ComponentActivity() {
                     if (event == Lifecycle.Event.ON_START &&
                         !locationPermissionsGranted &&
                         !shouldShowPermissionRationale) {
-                        launcher.launch(locationPermissions)
+                        locationPermissionLauncher.launch(locationPermissions)
                     }
                 }
                 lifecycleOwner.lifecycle.addObserver(observer)
@@ -119,7 +118,7 @@ class MainActivity : ComponentActivity() {
                                     when (userAction) {
                                         SnackbarResult.ActionPerformed -> {
                                             shouldShowPermissionRationale = false
-                                            launcher.launch(locationPermissions)
+                                            locationPermissionLauncher.launch(locationPermissions)
                                         }
                                         SnackbarResult.Dismissed -> {
                                             shouldShowPermissionRationale = false
@@ -148,33 +147,4 @@ class MainActivity : ComponentActivity() {
             startActivity(it)
         }
     }
-
-    // Logic to show alert dialog
-//                        if (shouldShowPermissionRationale && showDialog) {
-//                            AlertDialog(
-//                                modifier = Modifier.padding(contentPadding),
-//                                onDismissRequest = {
-//                                    showDialog = false
-//                                },
-//                                title = {
-//                                    Text("Permission Required")
-//                                },
-//                                text = {
-//                                    Text("You need to approve this permission in order to...")
-//                                },
-//                                confirmButton = {
-//                                    TextButton(onClick = {
-//                                        showDialog = false
-//                                    }) {
-//                                        Text("Confirm")
-//                                    }
-//                                },
-//                                dismissButton = {
-//                                    TextButton(onClick = {
-//                                        showDialog = false
-//                                    }) {
-//                                        Text("Deny")
-//                                    }
-//                                })
-//                        }
 }
