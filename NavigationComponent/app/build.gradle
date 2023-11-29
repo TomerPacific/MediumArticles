@@ -8,7 +8,6 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.tomerpacific.navigationcomponent"
         minSdkVersion 15
