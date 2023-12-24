@@ -43,8 +43,8 @@ class MainActivity : Activity() {
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String?>?,
-        grantResults: IntArray?
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         when (requestCode) {
             0 -> {
@@ -53,7 +53,7 @@ class MainActivity : Activity() {
         }
     }
 
-    fun writeFileToExternalStorage() {
+    private fun writeFileToExternalStorage() {
         val root: String = Environment.getExternalStorageDirectory().toString()
         val myDir = File("$root/saved_files")
         if (!myDir.exists()) {
