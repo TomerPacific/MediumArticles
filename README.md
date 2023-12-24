@@ -122,3 +122,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 59. [Firebase Remote Configurations](https://medium.com/p/ff1d7161bb01#4817-54e24931e939)
 
 ### 60. [Location Permissions In Jetpack Compose](https://medium.com/p/bb9b3dae8d76#1585-a6ff6a90d783)
+
+### 61. [Proto DataStore](https://medium.com/p/36ae997d00f2)
