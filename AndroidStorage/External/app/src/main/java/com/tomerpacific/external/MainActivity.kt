@@ -54,24 +54,26 @@ class MainActivity : Activity() {
     }
 
     private fun writeFileToExternalStorage() {
-        val root: String = Environment.getExternalStorageDirectory().toString()
-        val myDir = File("$root/saved_files")
-        if (!myDir.exists()) {
-            myDir.mkdirs()
-        }
-        try {
-            val file = File(myDir, "myfile.txt")
-            val out = FileOutputStream(file)
-            out.write(inputToFile.toByteArray())
-            out.close()
+        getExternalFilesDir("saved_files")?.let { root ->
+            val myDir = File("$root/saved_files")
+            if (!myDir.exists()) {
+                myDir.mkdirs()
+            }
+            try {
+                val file = File(myDir, "myfile.txt")
+                val out = FileOutputStream(file)
+                out.write(inputToFile.toByteArray())
+                out.close()
 
-            Toast.makeText(
-                applicationContext,
-                "File myfile.txt" + " has been saved successfully to external storage",
-                Toast.LENGTH_SHORT
-            ).show()
-        } catch (e: Exception) {
-            e.printStackTrace()
+                Toast.makeText(
+                    applicationContext,
+                    "File myfile.txt" + " has been saved successfully to external storage",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
+
     }
 }
