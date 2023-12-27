@@ -11,13 +11,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Get User Location'),
+      home: MyHomePage(title: 'Get User Location', key: UniqueKey()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({required Key key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -27,10 +27,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Position position = null;
+  Position? position;
+  final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
   void requestLocationPermission(BuildContext context) async {
-    Position currentPosition = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position currentPosition = await _geolocatorPlatform.getCurrentPosition();
 
     setState(() {
       position = currentPosition;
@@ -57,12 +58,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                   onPressed: () {
                     requestLocationPermission(context);
                   },
                   child: Text('Get Location Permission'),
-                  color: Colors.green
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green
+                  ),
               ),
             ),
             Center(
