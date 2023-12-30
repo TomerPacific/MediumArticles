@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green
               ),
-              child: Text('Get Location Permission'),
+              child: const Text('Get Location Permission'),
             ),
             Center(
               child: Text(position.toString()),
