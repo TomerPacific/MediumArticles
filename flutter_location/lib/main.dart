@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     LocationPermission locationPermission = await _geolocatorPlatform.checkPermission();
     if (locationPermission == LocationPermission.denied) {
       locationPermission = await _geolocatorPlatform.requestPermission();
-      if (locationPermission == LocationPermission.always) {
+      if (locationPermission == LocationPermission.always || locationPermission == LocationPermission.whileInUse) {
         isLocationPermissionGranted = true;
         getLocation();
       }
