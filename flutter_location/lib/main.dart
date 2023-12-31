@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -35,8 +37,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Position? position;
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
+  bool isLocationPermissionGranted = false;
+  bool isLocationPermissionDeniedForever = false;
 
-  void requestLocationPermission(BuildContext context) async {
+  void requestLocationPermission() async {
+
+    if (isLocationPermissionDeniedForever) {
+      return;
+    }
+
+    if (isLocationPermissionGranted) {
+      getLocation();
+      return;
+    }
+
+    LocationPermission locationPermission = await _geolocatorPlatform.checkPermission();
+    if (locationPermission == LocationPermission.denied) {
+      locationPermission = await _geolocatorPlatform.requestPermission();
+      if (locationPermission == LocationPermission.always) {
+        isLocationPermissionGranted = true;
+        getLocation();
+      }
+    } else if (locationPermission == LocationPermission.deniedForever) {
+      isLocationPermissionDeniedForever = true;
+    }
+  }
+
+  void getLocation() async {
     Position currentPosition = await _geolocatorPlatform.getCurrentPosition();
 
     setState(() {
@@ -58,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                requestLocationPermission(context);
+                requestLocationPermission();
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green
