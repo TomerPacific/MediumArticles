@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/services.dart';
@@ -40,15 +42,15 @@ class _MyHomePageState extends State<MyHomePage> {
   final int _periodicTaskId = 3;
 
   static void _oneShotTaskCallback() {
-    print("One Shot Task Running");
+    log("One Shot Task Running");
   }
 
   static void _oneShotAtTaskCallback() {
-    print("One Shot At Task Running");
+    log("One Shot At Task Running");
   }
 
   static void _periodicTaskCallback() {
-    print("Periodic Task Running");
+    log("Periodic Task Running");
   }
 
   void _scheduleOneShotAlarm(bool isTimed) async {
@@ -69,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<Duration> _chooseDuration() async {
     String duration = "";
     String durationString = durationSeconds;
+
     AlertDialog alert = AlertDialog(
       title: const Text("Enter a number for the duration"),
       content:
