@@ -15,13 +15,13 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Serialization Example'),
+      home: MyHomePage(title: 'Flutter Serialization Example', key: GlobalKey(),),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({required Key key, required this.title}) : super(key: key);
 
 
   final String title;
@@ -32,8 +32,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Doughnut _myDoughnut;
-  String _encoded;
+  late Doughnut _myDoughnut;
+  late String _encoded;
   String _toPresent = "";
 
   void serialize() {
@@ -91,20 +91,23 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 new Container(
                   margin: const EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                      padding: const EdgeInsets.all(8.0),
-                      textColor: Colors.white,
-                      color: Colors.red,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(8.0),
+                        textStyle: TextStyle(color: Colors.white),
+                        backgroundColor: Colors.red,
+                      ),
                       onPressed: serialize,
                       child: new Text("Serialize Doughnut")
                   ),
                 ),
                 new Container(
                   margin: const EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                      padding: const EdgeInsets.all(8.0),
-                      textColor: Colors.white,
-                      color: Colors.green,
+                  child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(8.0),
+                          textStyle: TextStyle(color: Colors.white),
+                          backgroundColor: Colors.green),
                       onPressed: deserialize,
                       child: new Text("Deserialize Doughnut")
                   ),
