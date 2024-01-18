@@ -1,7 +1,7 @@
 import 'package:serialization_example/models/doughnut.dart';
 
 class DoughnutList {
-  final List<Doughnut> doughnuts;
+  final List<Doughnut>? doughnuts;
 
   DoughnutList(this.doughnuts);
 
