@@ -1,4 +1,5 @@
 import 'package:serialization_example/models/doughnut.dart';
+import 'package:serialization_example/constants.dart';
 
 class DoughnutList {
   final List<Doughnut>? doughnuts;
@@ -6,11 +7,11 @@ class DoughnutList {
   DoughnutList(this.doughnuts);
 
   DoughnutList.fromJson(Map<String, dynamic> json)
-  : doughnuts = json['doughnuts'] != null ? List<Doughnut>.from(json['doughnuts']) : null;
+  : doughnuts = json[DOUGHNUTS_KEY] != null ? List<Doughnut>.from(json[DOUGHNUTS_KEY]) : null;
 
   Map<String, dynamic> toJson()  =>
   {
-    'doughnuts': doughnuts,
+    DOUGHNUTS_KEY: doughnuts,
   };
 
 }
