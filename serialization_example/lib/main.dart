@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         backgroundColor: Colors.red,
                       ),
                       onPressed: serialize,
-                      child: new Text("Serialize Doughnut")
+                      child: const Text("Serialize Doughnut")
                   ),
                 ),
                 new Container(
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           textStyle: TextStyle(color: Colors.white),
                           backgroundColor: Colors.green),
                       onPressed: deserialize,
-                      child: new Text("Deserialize Doughnut")
+                      child: const Text("Deserialize Doughnut")
                   ),
                 ),
               ],
