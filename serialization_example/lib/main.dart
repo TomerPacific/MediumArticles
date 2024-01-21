@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Serialization Example', key: GlobalKey(),),
+      home: MyHomePage(title: 'Flutter Serialization Example', key: GlobalKey()),
     );
   }
 }
@@ -64,27 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: <Widget>[
           Center(
-            child: new Container(
-                margin: const EdgeInsets.all(10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      new Flexible(
-                          child: new Text(
-                          "Doughnut Object " + (_toPresent.isEmpty ?
-                                                    "Doughnut name : " + _myDoughnut.name +
-                                                        " and is filled with " + _myDoughnut.filling +
-                                                        " and is topped with " + _myDoughnut.topping +
-                                                        " and costs " + _myDoughnut.price.toString()
-                              : _toPresent)
-                        )
-                      )
-                    ]
-                )
-            )
-      ),
-
-          Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -113,6 +92,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+          ),
+          Center(
+              child: new Container(
+                  margin: const EdgeInsets.all(10.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                            child: new Text(
+                                "Doughnut Object " + (_toPresent.isEmpty ?
+                                "Doughnut name : " + _myDoughnut.name +
+                                    " and is filled with " + _myDoughnut.filling +
+                                    " and is topped with " + _myDoughnut.topping +
+                                    " and costs " + _myDoughnut.price.toString()
+                                    : _toPresent)
+                            )
+                        )
+                      ]
+                  )
+              )
           ),
         ],
       )
