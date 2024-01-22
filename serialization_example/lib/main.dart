@@ -113,6 +113,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
               )
           ),
+          Center(
+                child: new Container(
+                    margin: const EdgeInsets.all(10.0),
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    new Flexible(
+                        child: Image.asset('assets/images/doughnut.png'),
+                    )
+                  ]
+                )
+            )
+          )
         ],
       )
 
