@@ -124,3 +124,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 60. [Location Permissions In Jetpack Compose](https://medium.com/p/bb9b3dae8d76#1585-a6ff6a90d783)
 
 ### 61. [Proto DataStore](https://medium.com/p/36ae997d00f2)
+
+### 62. [Flutter - Migrating to V2 Embedding](https://medium.com/p/964fd4ed9e5a)
