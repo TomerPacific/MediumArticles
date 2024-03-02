@@ -13,13 +13,15 @@ export function gatherMediumArticles(): Promise<Article[]> {
         })
         .then(function(html) {
             const regexp = new RegExp(/\[(.*?)\]\((.*?)\)/, 'g')
-            let matches
+            let matches:RegExpExecArray
+
             while ((matches = regexp.exec(html)) !== null) {
                 let articleTitle = matches[ARTICLE_TITLE_INDEX]
                 let articleLink = matches[ARTICLE_LINK_INDEX]
                 let article: Article = new Article(articleTitle, articleLink)
                 articles.push(article);
             }
+            
             return resolve(articles)
         }).catch(function(e) {
             return reject(e)
