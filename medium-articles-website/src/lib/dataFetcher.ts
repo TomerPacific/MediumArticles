@@ -1,9 +1,11 @@
 import { Article } from './article'
 
+const ENDPOINT: string = 'https://raw.githubusercontent.com/tomerpacific/MediumArticles/master/README.md'
+
 export function gatherMediumArticles(): Promise<Article[]> {
     let articles: Article[] = []
     return new Promise((resolve, reject) => {
-        fetch('https://raw.githubusercontent.com/tomerpacific/MediumArticles/master/README.md')
+        fetch(ENDPOINT)
         .then(function(response) {
             return response.text()
         })
