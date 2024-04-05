@@ -128,3 +128,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 62. [Flutter - Migrating to V2 Embedding](https://medium.com/p/964fd4ed9e5a)
 
 ### 63. [iOS Privacy Manifest](https://medium.com/p/6b56a895d122)
+
+### 64. [Testing Proto DataStore](https://proandroiddev.com/testing-proto-datastore-63580efbf5fc)
