@@ -130,3 +130,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 63. [iOS Privacy Manifest](https://medium.com/p/6b56a895d122)
 
 ### 64. [Testing Proto DataStore](https://proandroiddev.com/testing-proto-datastore-63580efbf5fc)
+
+### 65. [Working On A Multiple Library Project](https://proandroiddev.com/working-on-a-multiple-library-project-b01af2625391)
