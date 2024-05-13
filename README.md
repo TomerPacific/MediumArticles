@@ -132,3 +132,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 64. [Testing Proto DataStore](https://proandroiddev.com/testing-proto-datastore-63580efbf5fc)
 
 ### 65. [Working On A Multiple Library Project](https://proandroiddev.com/working-on-a-multiple-library-project-b01af2625391)
+
+### 66. [Make Your Flutter Package Privacy Manifest Compatible](https://levelup.gitconnected.com/make-your-flutter-package-privacy-manifest-compatible-52b2da5eabf3)
