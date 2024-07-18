@@ -136,3 +136,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 66. [Make Your Flutter Package Privacy Manifest Compatible](https://levelup.gitconnected.com/make-your-flutter-package-privacy-manifest-compatible-52b2da5eabf3)
 
 ### 67. [Migrating From Play Core Library](https://medium.com/p/0b4afd3fca1a)
+
+### 68. [Migrating a Flutter Application from GetIt to Bloc](https://medium.com/flutter-community/migrating-a-flutter-application-from-getit-to-bloc-c737ffebed0a)
