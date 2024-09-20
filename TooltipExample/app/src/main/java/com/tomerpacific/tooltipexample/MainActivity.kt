@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
 import com.tomerpacific.tooltipexample.ui.theme.TooltipExampleTheme
 import kotlinx.coroutines.launch
 
@@ -84,7 +85,7 @@ fun BasicTooltip() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RichTooltip() {
+fun RichTooltip(caretSize: DpSize = TooltipDefaults.caretSize) {
     val tooltipPosition = TooltipDefaults.rememberRichTooltipPositionProvider()
     val tooltipState = rememberTooltipState(isPersistent = true)
     val scope = rememberCoroutineScope()
@@ -94,7 +95,7 @@ fun RichTooltip() {
         tooltip = {
                   RichTooltip(
                       title = { Text("RichTooltip") },
-                      caretSize = TooltipDefaults.caretSize,
+                      caretSize = caretSize,
                       action = {
                           TextButton(onClick = {
                               scope.launch {
