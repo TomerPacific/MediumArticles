@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberBasicTooltipState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -96,7 +97,10 @@ fun RichTooltip(caretSize: DpSize = DpSize(20.dp, 20.dp)) {
     val tooltipPosition = TooltipDefaults.rememberRichTooltipPositionProvider()
     val tooltipState = rememberTooltipState(isPersistent = true)
     val scope = rememberCoroutineScope()
-
+    val tooltipIcon = when (caretSize) {
+        DpSize.Zero -> Icons.Filled.Call
+        else -> Icons.Filled.Check
+    }
 
     TooltipBox(positionProvider = tooltipPosition,
         tooltip = {
@@ -118,8 +122,10 @@ fun RichTooltip(caretSize: DpSize = DpSize(20.dp, 20.dp)) {
                   }
         },
         state = tooltipState) {
-        IconButton(onClick = {  }) {
-            Icon(imageVector = Icons.Filled.Call, contentDescription = "Localized Description")
+        IconButton(onClick = {
+            /* Icon button's click event */
+        }) {
+            Icon(imageVector = tooltipIcon, contentDescription = "Localized Description")
         }
     }
 }
