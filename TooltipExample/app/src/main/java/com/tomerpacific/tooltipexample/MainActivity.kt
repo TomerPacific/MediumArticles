@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.tomerpacific.tooltipexample.ui.theme.TooltipExampleTheme
@@ -50,19 +51,25 @@ class MainActivity : ComponentActivity() {
                     Column(modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center) {
-                        Row(modifier = Modifier.fillMaxWidth().height(intrinsicSize = IntrinsicSize.Max),
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(intrinsicSize = IntrinsicSize.Max),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically) {
                             Text("Basic Tooltip")
                             BasicTooltip()
                         }
-                        Row(modifier = Modifier.fillMaxWidth().height(intrinsicSize = IntrinsicSize.Max),
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(intrinsicSize = IntrinsicSize.Max),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically) {
                             Text("Rich Tooltip With No Caret")
                             RichTooltip(DpSize.Zero)
                         }
-                        Row(modifier = Modifier.fillMaxWidth().height(intrinsicSize = IntrinsicSize.Max),
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(intrinsicSize = IntrinsicSize.Max),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically) {
                             Text("Rich Tooltip With Caret")
@@ -85,8 +92,12 @@ fun BasicTooltip() {
     BasicTooltipBox(positionProvider = tooltipPosition,
         tooltip =  { Text("Hello World") } ,
         state = tooltipState) {
-        IconButton(onClick = { /* Icon button's click event */ }) {
-            Icon(imageVector = Icons.Filled.Favorite, contentDescription = "Localized Description")
+        IconButton(
+            onClick = { /* Icon button's click event */ }) {
+            Icon(imageVector = Icons.Filled.Favorite,
+                contentDescription = "Localized Description",
+                tint = colorResource(id = R.color.red)
+            )
         }
     }
 }
