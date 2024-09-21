@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -65,7 +66,7 @@ class MainActivity : ComponentActivity() {
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically) {
                             Text("Rich Tooltip With No Caret")
-                            RichTooltip(DpSize.Zero)
+                            RichTooltip(DpSize.Zero, iconColor = Color.Blue)
                         }
                         Row(modifier = Modifier
                             .fillMaxWidth()
@@ -104,7 +105,8 @@ fun BasicTooltip() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RichTooltip(caretSize: DpSize = DpSize(20.dp, 20.dp)) {
+fun RichTooltip(caretSize: DpSize = DpSize(20.dp, 20.dp),
+                iconColor: Color = Color.Green) {
     val tooltipPosition = TooltipDefaults.rememberRichTooltipPositionProvider()
     val tooltipState = rememberTooltipState(isPersistent = true)
     val scope = rememberCoroutineScope()
@@ -136,7 +138,9 @@ fun RichTooltip(caretSize: DpSize = DpSize(20.dp, 20.dp)) {
         IconButton(onClick = {
             /* Icon button's click event */
         }) {
-            Icon(imageVector = tooltipIcon, contentDescription = "Localized Description")
+            Icon(imageVector = tooltipIcon,
+                contentDescription = "Localized Description",
+                tint = iconColor)
         }
     }
 }
