@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RichTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
             TooltipExampleTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     Column(modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -108,6 +109,7 @@ fun RichTooltip(caretSize: DpSize = DpSize(20.dp, 20.dp),
                 iconColor: Color = Color.Green) {
     val tooltipPosition = TooltipDefaults.rememberRichTooltipPositionProvider()
     val tooltipState = rememberTooltipState(isPersistent = true)
+
     val scope = rememberCoroutineScope()
     val tooltipIcon = when (caretSize) {
         DpSize.Zero -> Icons.Filled.Call
