@@ -140,3 +140,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 68. [Migrating a Flutter Application from GetIt to Bloc](https://medium.com/flutter-community/migrating-a-flutter-application-from-getit-to-bloc-c737ffebed0a)
 
 ### 69. [Tooltips In Jetpack Compose](https://levelup.gitconnected.com/tooltips-in-jetpack-compose-8642dbe51b72)
+
+### 70. [Localization In Flutter](https://www.freecodecamp.org/news/how-to-support-multiple-languages-in-flutter/)
