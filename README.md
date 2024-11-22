@@ -141,4 +141,4 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 69. [Tooltips In Jetpack Compose](https://levelup.gitconnected.com/tooltips-in-jetpack-compose-8642dbe51b72)
 
-### 70. [Localization In Flutter](https://www.freecodecamp.org/news/how-to-support-multiple-languages-in-flutter/)
+### 70. [Localization In Flutter](https://levelup.gitconnected.com/supporting-multiple-languages-in-your-flutter-application-e814bbaebdfc)
