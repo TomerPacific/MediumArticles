@@ -142,3 +142,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 69. [Tooltips In Jetpack Compose](https://levelup.gitconnected.com/tooltips-in-jetpack-compose-8642dbe51b72)
 
 ### 70. [Localization In Flutter](https://levelup.gitconnected.com/supporting-multiple-languages-in-your-flutter-application-e814bbaebdfc)
+
+### 71. [Ktor In Jetpack Compose](https://medium.com/proandroiddev/using-ktor-in-jetpack-compose-e00b1b32eef0)
