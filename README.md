@@ -144,3 +144,5 @@ A repository that contains links to all the articles I wrote and code associated
 ### 70. [Localization In Flutter](https://levelup.gitconnected.com/supporting-multiple-languages-in-your-flutter-application-e814bbaebdfc)
 
 ### 71. [Ktor In Jetpack Compose](https://medium.com/proandroiddev/using-ktor-in-jetpack-compose-e00b1b32eef0)
+
+### 72. [Migrating to Kotlin 2 In Jetpack Compose](https://medium.com/proandroiddev/migrating-to-kotlin-2-0-in-your-jetpack-compose-project-315426b88d66)
