@@ -2,6 +2,8 @@
 [versions]
 core-ktx = "1.7.0"
 compose = "1.1.0-beta01"
+android-gradle-plugin = "8.9.1"
+kotlin = "1.6.21"
 lifecycle-runtime = "2.3.1"
 activity-compose = "1.3.1"
 junit = "4.13.2"
@@ -32,3 +34,8 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 compose-all = [ "compose-ui", "compose-material", "compose-ui-tooling-preview", "compose-runtime-livedata" ]
 compose-debug = [ "compose-ui-tooling", "compose-ui-test-manifest" ]
 testing = [ "junit4", "androidx-test-junit", "espresso-core" ]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
