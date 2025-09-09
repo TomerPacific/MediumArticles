@@ -55,6 +55,7 @@ dependencies {
     implementation libs.lifecycle.runtime.ktx
     implementation libs.activity.compose.lib
     implementation libs.compose.runtime.livedata
+    implementation libs.compose.material.icons.extended
 
     testImplementation libs.junit4
     androidTestImplementation libs.androidx.test.junit

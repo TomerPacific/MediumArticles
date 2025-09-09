@@ -24,6 +24,7 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
 activity-compose-lib = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 # Testing
 junit4 = { group = "junit", name = "junit", version.ref = "junit" }
