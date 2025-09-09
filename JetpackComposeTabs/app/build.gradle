@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
@@ -35,9 +36,7 @@ android {
     buildFeatures {
         compose true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-    }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -47,18 +46,21 @@ android {
 }
 
 dependencies {
-        implementation(libs.androidx.core.ktx)
-        implementation(libs.compose.ui)
-        implementation(libs.compose.material)
-        implementation(libs.compose.ui.tooling.preview)
-        implementation(libs.lifecycle.runtime.ktx)
-        implementation(libs.activity.compose.lib) // alias from catalog
-        implementation(libs.compose.runtime.livedata)
+    implementation platform(libs.compose.bom)
 
-        testImplementation(libs.junit4)
-        androidTestImplementation(libs.androidx.test.junit)
-        androidTestImplementation(libs.espresso.core)
-        androidTestImplementation(libs.compose.ui.test.junit4)
-        debugImplementation(libs.compose.ui.tooling)
-        debugImplementation(libs.compose.ui.test.manifest)
+    implementation libs.androidx.core.ktx
+    implementation libs.compose.ui
+    implementation libs.compose.material
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.lifecycle.runtime.ktx
+    implementation libs.activity.compose.lib
+    implementation libs.compose.runtime.livedata
+
+    testImplementation libs.junit4
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.compose.ui.test.junit4
+
+    debugImplementation libs.compose.ui.tooling
+    debugImplementation libs.compose.ui.test.manifest
 }
