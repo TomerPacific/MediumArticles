@@ -3,12 +3,12 @@ core-ktx = "1.8.0"
 kotlin-bom = "1.8.0"
 lifecycle-runtime-ktx = "2.3.1"
 activity-compose = "1.5.1"
-compose-bom = "2022.10.00"
+compose-bom = "2024.09.01"
 junit = "4.13.2"
 androidx-junit = "1.1.5"
 espresso-core = "3.5.1"
 agp = "8.9.1"
-kotlin = "1.7.20"
+kotlin = "2.0.0"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
