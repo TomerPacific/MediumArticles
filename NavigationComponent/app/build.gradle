@@ -2,16 +2,14 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 36
     defaultConfig {
         applicationId "com.tomerpacific.navigationcomponent"
-        minSdkVersion 15
-        targetSdkVersion 33
+        minSdkVersion 21
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -23,22 +21,26 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+    buildFeatures {
+        viewBinding true
+    }
+    namespace 'com.tomerpacific.navigationcomponent'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0-alpha06"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.0-alpha06"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.9.4"
+    implementation "androidx.navigation:navigation-ui-ktx:2.9.4"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
