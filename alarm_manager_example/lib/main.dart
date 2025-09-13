@@ -189,67 +189,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-              const Text(
+            const Text(
               appName,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child:  SizedBox(
-                    width: 90,
-                    height: 50,
-                    child: ElevatedButton.icon(
-                        onPressed: () {
-                          _scheduleOneShotAlarm(false);
-                        },
-                        icon: const Icon(Icons.plus_one),
-                        label: const Text(
-                            oneShotAlarm
-                        )
-                    ),
+
+            // Make Row expand to full width
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () => _scheduleOneShotAlarm(false),
+                    icon: const Icon(Icons.plus_one),
+                    label: const Text(oneShotAlarm),
                   ),
-                ),
-                SizedBox(
-                  width: 120,
-                  height: 50,
-                  child: ElevatedButton.icon(
-                      onPressed: () {
-                        _scheduleOneShotAlarm(true);
-                      },
-                      icon: const Icon(Icons.calendar_today),
-                      label: const Text(
-                          oneShotAtAlarm
-                      )
+                  ElevatedButton.icon(
+                    onPressed: () => _scheduleOneShotAlarm(true),
+                    icon: const Icon(Icons.calendar_today),
+                    label: const Text(oneShotAtAlarm),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 15),
-                  child: SizedBox(
-                    width: 112,
-                    height: 50,
-                    child:  ElevatedButton.icon(
-                        onPressed: _schedulePeriodicAlarm,
-                        icon: const Icon(Icons.watch_later_outlined),
-                        label: const Text(
-                            periodicAlarm
-                        )
-                    ),
+                  ElevatedButton.icon(
+                    onPressed: _schedulePeriodicAlarm,
+                    icon: const Icon(Icons.watch_later_outlined),
+                    label: const Text(periodicAlarm),
                   ),
-                ),
-              ],
-            )
+                ],
+              ),
+            ),
           ],
         ),
       ),
