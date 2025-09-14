@@ -1,11 +1,29 @@
-include ':app'
+// android/settings.gradle
 
-def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
-def properties = new Properties()
+pluginManagement {
+    // read flutter.sdk from local.properties
+    def properties = new Properties()
+    file("local.properties").withInputStream { properties.load(it) }
+    def flutterSdkPath = properties.getProperty("flutter.sdk")
+    assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
 
-assert localPropertiesFile.exists()
-localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
+    // make Flutter's gradle build-logic available to Gradle
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
-def flutterSdkPath = properties.getProperty("flutter.sdk")
-assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
-apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    // Flutter's plugin loader for the Plugin DSL
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+
+    // use the same AGP / Kotlin versions your project currently uses
+    id "com.android.application" version '8.9.1' apply false
+    id "org.jetbrains.kotlin.android" version "1.9.20" apply false
+}
+
+include ":app"
