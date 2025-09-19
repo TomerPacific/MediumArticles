@@ -1,14 +1,8 @@
 buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
+    ext {
+        agp_version = '8.9.1'
     }
 }
-
 allprojects {
     repositories {
         google()
@@ -25,5 +19,5 @@ subprojects {
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }
