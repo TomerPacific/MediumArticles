@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Native - JS Communication Bridge', key: GlobalKey()),
+      home: MyHomePage(title: 'Native - JS Communication Bridge'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({required Key key, required this.title}) : super(key: key);
+  MyHomePage({required this.title});
 
   final String title;
 
