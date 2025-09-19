@@ -1,13 +1,16 @@
 // android/settings.gradle
 
 pluginManagement {
-    // read flutter.sdk from local.properties
-    def properties = new Properties()
-    file("local.properties").withInputStream { properties.load(it) }
-    def flutterSdkPath = properties.getProperty("flutter.sdk")
-    assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+    // find flutter sdk path from local.properties
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def p = properties.getProperty("flutter.sdk")
+        assert p != null, "flutter.sdk not set in local.properties"
+        return p
+    }()
 
-    // make Flutter's gradle build-logic available to Gradle
+    // include the flutter tools gradle build so the Flutter plugins are available
     includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
     repositories {
