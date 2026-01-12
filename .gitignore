@@ -11,7 +11,6 @@ build/
 .packages
 .pub-cache/
 .pub/
-/build/
 
 # OS files
 .DS_Store
