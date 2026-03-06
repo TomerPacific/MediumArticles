@@ -151,3 +151,5 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 74. [Chaining Git Actions For Android](https://proandroiddev.com/chaining-git-actions-for-android-beb387e9db50)
 
+### 75. [How I Shrunk My Android App Size by Converting PNGs to Vector Drawables](https://proandroiddev.com/how-i-shrunk-my-android-app-size-by-converting-pngs-to-vector-drawables-5005da8cb48e)
+
