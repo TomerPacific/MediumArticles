@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,16 +43,20 @@ import androidx.compose.ui.unit.dp
 import com.example.contactpicker.ui.theme.ContactPickerTheme
 
 /**
- * A custom ActivityResultContract to pick multiple contacts.
- * This utilizes the new Android 15+ Contacts Picker API (ContactsPickerSessionContract).
+ * A custom ActivityResultContract to pick contacts.
+ * Input: Boolean (true for multiple selection, false for single selection)
+ * Output: List of selected contact URIs.
  */
-class PickMultipleContacts : ActivityResultContract<Unit?, List<Uri>>() {
-    override fun createIntent(context: Context, input: Unit?): Intent {
-        // ACTION_PICK_CONTACTS is available starting in Android 17 (API 37)
+class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
+    override fun createIntent(context: Context, input: Boolean): Intent {
         return if (Build.VERSION.SDK_INT >= 37) {
-            Intent(ACTION_PICK_CONTACTS)
+            Intent(ACTION_PICK_CONTACTS).apply {
+                if (input) {
+                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                }
+            }
         } else {
-            // Fallback to legacy single-contact picker for older versions
+            // Fallback to legacy picker (always single selection in this fallback)
             Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
         }
     }
@@ -59,12 +64,12 @@ class PickMultipleContacts : ActivityResultContract<Unit?, List<Uri>>() {
     override fun parseResult(resultCode: Int, intent: Intent?): List<Uri> {
         return if (resultCode == Activity.RESULT_OK && intent != null) {
             val uris = mutableListOf<Uri>()
-            // Results are returned via ClipData for multiple selections
+            // Results for multiple selection are returned via ClipData
             intent.clipData?.let { clipData ->
                 for (i in 0 until clipData.itemCount) {
                     clipData.getItemAt(i).uri?.let { uris.add(it) }
                 }
-            } ?: intent.data?.let { uris.add(it) } // Fallback to single result
+            } ?: intent.data?.let { uris.add(it) } // Single result
             
             uris.distinct()
         } else {
@@ -92,13 +97,12 @@ fun ContactPickerScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var selectedContactNames by remember { mutableStateOf<List<String>>(emptyList()) }
 
-    // Launcher for the new Android 15+ Contacts Picker API
-    val pickMultipleContactsLauncher = rememberLauncherForActivityResult(
-        contract = PickMultipleContacts()
+    // Launcher for the Contact Picker API
+    val pickContactsLauncher = rememberLauncherForActivityResult(
+        contract = PickContactsContract()
     ) { uris ->
         val names = mutableListOf<String>()
         uris.forEach { contactUri ->
-            // The URIs returned by the picker have temporary read permissions.
             val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
             context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
@@ -121,27 +125,49 @@ fun ContactPickerScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "Multi-Contact Picker",
+            text = "System Contact Picker",
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.primary
         )
 
         Text(
-            text = "Using Android 15 Contacts Picker API",
+            text = "Modern Privacy-Focused Selection",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = 8.dp)
         )
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        Button(
-            onClick = { pickMultipleContactsLauncher.launch(null) },
+        // Option 1: Single Selection
+        OutlinedButton(
+            onClick = { pickContactsLauncher.launch(false) },
             modifier = Modifier
                 .height(56.dp)
                 .fillMaxWidth(0.8f)
         ) {
-            val buttonText = if (Build.VERSION.SDK_INT >= 37) "Select Multiple Contacts" else "Select Contact"
-            Text(buttonText)
+            Text("Select Single Contact")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Option 2: Multiple Selection (Only supported on Android 17+)
+        Button(
+            onClick = { pickContactsLauncher.launch(true) },
+            enabled = Build.VERSION.SDK_INT >= 37,
+            modifier = Modifier
+                .height(56.dp)
+                .fillMaxWidth(0.8f)
+        ) {
+            Text("Select Multiple Contacts")
+        }
+        
+        if (Build.VERSION.SDK_INT < 37) {
+            Text(
+                text = "(Multi-select requires Android 17+)",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 4.dp)
+            )
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -186,7 +212,7 @@ fun ContactPickerScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Note: This app uses the new system Contact Picker API on Android 17+ for multi-selection without permissions. On older versions, it falls back to single selection.",
+            text = "The new Contact Picker API allows sharing specific contacts without needing full READ_CONTACTS permission.",
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(horizontal = 32.dp),
             textAlign = TextAlign.Center
