@@ -29,8 +29,8 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
     fun onModernContactsPicked(uris: List<Uri>) {
         viewModelScope.launch {
             val names = withContext(Dispatchers.IO) {
-                uris.mapNotNull { contactUri ->
-                    resolveContactName(contactUri)
+                uris.flatMap { contactUri ->
+                    resolveContactNames(contactUri)
                 }
             }
             selectedContactNames = names
@@ -64,14 +64,19 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    private fun resolveContactName(contactUri: Uri): String? {
-        val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
-        return context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
-                if (nameIndex != -1) cursor.getString(nameIndex) else null
-            } else null
+    private fun resolveContactNames(contactUri: Uri): List<String> {
+        val names = mutableListOf<String>()
+        // Note: ACTION_PICK_CONTACTS returns a Session URI that follows the Data table schema
+        val projection = arrayOf(ContactsContract.Data.DISPLAY_NAME)
+        context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
+            val nameIndex = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)
+            if (nameIndex != -1) {
+                while (cursor.moveToNext()) {
+                    cursor.getString(nameIndex)?.let { names.add(it) }
+                }
+            }
         }
+        return names
     }
 
     private fun loadAllContacts(): List<ContactEntry> {
