@@ -9,31 +9,44 @@ import android.provider.ContactsContract
 import androidx.activity.result.contract.ActivityResultContract
 
 /**
- * A custom ActivityResultContract to pick contacts (API 17+).
- * Enhanced to request specific data fields when using the modern API.
+ * A custom ActivityResultContract to pick contacts.
+ * Input: Boolean (isMultipleSelection)
+ * Output: List of selected contact URIs.
  */
 class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
     override fun createIntent(context: Context, isMultipleSelection: Boolean): Intent {
-        return if (Build.VERSION.SDK_INT >= 37) {
-            Intent("android.provider.action.PICK_CONTACTS").apply {
-                // Request phone numbers specifically
-                val requestedFields = arrayListOf(
-                    ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
-                )
-                // Use the modern extra key for requested fields
-                putStringArrayListExtra(
-                    "android.provider.extra.PICK_CONTACTS_REQUESTED_DATA_FIELDS",
-                    requestedFields
-                )
-                
-                if (isMultipleSelection) {
-                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                    // Optional: limit to 10 contacts
-                    putExtra("android.provider.extra.PICK_CONTACTS_SELECTION_LIMIT", 10)
-                }
+        val modernAction = "android.provider.action.PICK_CONTACTS"
+        val modernIntent = Intent(modernAction).apply {
+            type = ContactsContract.Contacts.CONTENT_TYPE
+            
+            val requestedFields = arrayListOf(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+            )
+            putStringArrayListExtra(
+                "android.provider.extra.PICK_CONTACTS_REQUESTED_DATA_FIELDS",
+                requestedFields
+            )
+            
+            if (isMultipleSelection) {
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                putExtra("android.provider.extra.PICK_CONTACTS_SELECTION_LIMIT", 10)
             }
+        }
+
+        // Check if the modern picker is available on this specific device build
+        val isModernPickerAvailable = Build.VERSION.SDK_INT >= 37 && 
+                modernIntent.resolveActivity(context.packageManager) != null
+
+        return if (isModernPickerAvailable) {
+            modernIntent
         } else {
-            Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+            if (isMultipleSelection) {
+                // Legacy multiple selection (handled via custom UI in our app)
+                Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+            } else {
+                // Legacy single selection: Pick the phone number directly
+                Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI)
+            }
         }
     }
 

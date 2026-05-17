@@ -5,6 +5,12 @@
         android:name="android.permission.READ_CONTACTS"
         android:maxSdkVersion="36" />
 
+    <queries>
+        <intent>
+            <action android:name="android.provider.action.PICK_CONTACTS" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
