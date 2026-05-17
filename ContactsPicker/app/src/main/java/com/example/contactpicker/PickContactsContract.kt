@@ -14,7 +14,7 @@ import androidx.activity.result.contract.ActivityResultContract
  * Output: List of selected contact URIs.
  */
 class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
-    override fun createIntent(context: Context, isMultipleSelection: Boolean): Intent {
+    override fun createIntent(context: Context, input: Boolean): Intent {
         val modernAction = "android.provider.action.PICK_CONTACTS"
         val modernIntent = Intent(modernAction).apply {
             type = ContactsContract.Contacts.CONTENT_TYPE
@@ -27,7 +27,7 @@ class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
                 requestedFields
             )
             
-            if (isMultipleSelection) {
+            if (input) {
                 putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                 putExtra("android.provider.extra.PICK_CONTACTS_SELECTION_LIMIT", 10)
             }
@@ -40,7 +40,7 @@ class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
         return if (isModernPickerAvailable) {
             modernIntent
         } else {
-            if (isMultipleSelection) {
+            if (input) {
                 // Legacy multiple selection (handled via custom UI in our app)
                 Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
             } else {
