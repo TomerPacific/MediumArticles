@@ -69,12 +69,11 @@ fun ContactPickerScreen(
     if (viewModel.showLegacyPicker) {
         LegacyContactPickerUI(
             contactList = viewModel.filteredLegacyContacts,
+            selectedCount = viewModel.selectedLegacyCount,
             searchQuery = viewModel.searchQuery,
             onSearchQueryChange = { query -> viewModel.updateSearchQuery(query) },
             onToggleSelection = { contactId -> viewModel.toggleLegacyContactSelection(contactId) },
-            onSelectionComplete = { selectedItems -> 
-                viewModel.onLegacySelectionComplete(selectedItems) 
-            },
+            onSelectionComplete = { viewModel.onLegacySelectionComplete() },
             onCancel = { viewModel.closeLegacyPicker() }
         )
     } else {

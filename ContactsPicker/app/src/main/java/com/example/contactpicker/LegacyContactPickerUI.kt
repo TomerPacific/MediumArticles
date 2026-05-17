@@ -32,10 +32,11 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun LegacyContactPickerUI(
     contactList: List<ContactEntry>,
+    selectedCount: Int,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
     onToggleSelection: (String) -> Unit,
-    onSelectionComplete: (List<ContactEntry>) -> Unit,
+    onSelectionComplete: () -> Unit,
     onCancel: () -> Unit
 ) {
     Column(
@@ -44,7 +45,18 @@ fun LegacyContactPickerUI(
             .systemBarsPadding()
             .padding(16.dp)
     ) {
-        Text("Select Contacts", style = MaterialTheme.typography.titleLarge)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Select Contacts", style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = "$selectedCount/10",
+                style = MaterialTheme.typography.titleMedium,
+                color = if (selectedCount >= 10) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+            )
+        }
         
         Spacer(modifier = Modifier.height(16.dp))
         
@@ -101,10 +113,7 @@ fun LegacyContactPickerUI(
                 Text("Cancel")
             }
             Button(
-                onClick = {
-                    val selectedItems = contactList.filter { contact -> contact.isSelected }
-                    onSelectionComplete(selectedItems)
-                }
+                onClick = onSelectionComplete
             ) {
                 Text("Done")
             }

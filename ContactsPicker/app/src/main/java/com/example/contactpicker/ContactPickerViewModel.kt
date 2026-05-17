@@ -17,6 +17,10 @@ import kotlinx.coroutines.withContext
 
 class ContactPickerViewModel(application: Application) : AndroidViewModel(application) {
 
+    companion object {
+        private const val SELECTION_LIMIT = 10
+    }
+
     var selectedContacts by mutableStateOf<List<ContactEntry>>(emptyList())
         private set
 
@@ -35,6 +39,10 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
+    val selectedLegacyCount by derivedStateOf {
+        legacyContactsList.count { it.isSelected }
+    }
+
     private val context: Context get() = getApplication<Application>().applicationContext
 
     fun onModernContactsPicked(resultUris: List<Uri>) {
@@ -46,8 +54,8 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun onLegacySelectionComplete(selectedItems: List<ContactEntry>) {
-        selectedContacts = selectedItems
+    fun onLegacySelectionComplete() {
+        selectedContacts = legacyContactsList.filter { it.isSelected }
         showLegacyPicker = false
         searchQuery = ""
     }
@@ -74,33 +82,82 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
         val targetIndex = legacyContactsList.indexOfFirst { it.id == contactId }
         if (targetIndex != -1) {
             val contact = legacyContactsList[targetIndex]
+            
+            // If selecting a new contact, enforce the limit
+            if (!contact.isSelected) {
+                val currentSelectedCount = legacyContactsList.count { it.isSelected }
+                if (currentSelectedCount >= SELECTION_LIMIT) return
+            }
+
             legacyContactsList[targetIndex] = contact.copy(isSelected = !contact.isSelected)
         }
     }
 
     private fun resolveContactDetails(contactUri: Uri): List<ContactEntry> {
         val contactList = mutableListOf<ContactEntry>()
-        val projection = arrayOf(
-            ContactsContract.Data.CONTACT_ID,
-            ContactsContract.Data.DISPLAY_NAME_PRIMARY,
-            ContactsContract.CommonDataKinds.Phone.NUMBER
-        )
-        context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
-            val idColumnIndex = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID)
-            val nameColumnIndex = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME_PRIMARY)
-            val phoneColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-            
-            while (cursor.moveToNext()) {
-                val contactId = if (idColumnIndex != -1) cursor.getString(idColumnIndex) else ""
-                val contactName = if (nameColumnIndex != -1) {
-                    cursor.getString(nameColumnIndex) ?: "Unknown"
-                } else "Unknown"
-                val phoneNumber = if (phoneColumnIndex != -1) cursor.getString(phoneColumnIndex) else null
+        
+        // Android 17+ Session URIs have a specific authority
+        val isSessionUri = contactUri.authority == "com.android.contacts.picker.sessions"
+        
+        if (android.os.Build.VERSION.SDK_INT >= 37 && isSessionUri) {
+            val projection = arrayOf(
+                ContactsContract.Data.CONTACT_ID,
+                ContactsContract.Data.DISPLAY_NAME_PRIMARY,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+            )
+            context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
+                val idIdx = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID)
+                val nameIdx = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME_PRIMARY)
+                val phoneIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                 
-                contactList.add(ContactEntry(contactId, contactName, phoneNumber))
+                while (cursor.moveToNext()) {
+                    val id = if (idIdx != -1) cursor.getString(idIdx) else ""
+                    val name = if (nameIdx != -1) cursor.getString(nameIdx) ?: "Unknown" else "Unknown"
+                    val phone = if (phoneIdx != -1) cursor.getString(phoneIdx) else null
+                    contactList.add(ContactEntry(id, name, phone))
+                }
+            }
+        } else {
+            // Legacy URI or URI from Intent.ACTION_PICK (ContactsContract.Contacts.CONTENT_URI)
+            val projection = arrayOf(
+                ContactsContract.Contacts._ID,
+                ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
+            )
+            context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val idIdx = cursor.getColumnIndex(ContactsContract.Contacts._ID)
+                    val nameIdx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+                    
+                    val id = cursor.getString(idIdx)
+                    val name = cursor.getString(nameIdx) ?: "Unknown"
+                    
+                    // Now query for phone numbers using the ID
+                    val phone = fetchPhoneNumberForContact(id)
+                    contactList.add(ContactEntry(id, name, phone))
+                }
             }
         }
+        
         return contactList
+    }
+
+    private fun fetchPhoneNumberForContact(contactId: String): String? {
+        val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER)
+        val selection = "${ContactsContract.CommonDataKinds.Phone.CONTACT_ID} = ?"
+        val selectionArgs = arrayOf(contactId)
+        
+        return context.contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            projection,
+            selection,
+            selectionArgs,
+            null
+        )?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val phoneIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                if (phoneIdx != -1) cursor.getString(phoneIdx) else null
+            } else null
+        }
     }
 
     private fun loadAllContacts(): List<ContactEntry> {

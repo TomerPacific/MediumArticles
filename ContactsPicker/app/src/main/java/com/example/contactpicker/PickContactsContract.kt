@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
-import android.provider.ContactsPickerSessionContract.ACTION_PICK_CONTACTS
 import androidx.activity.result.contract.ActivityResultContract
 
 /**
@@ -16,7 +15,7 @@ import androidx.activity.result.contract.ActivityResultContract
 class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
     override fun createIntent(context: Context, isMultipleSelection: Boolean): Intent {
         return if (Build.VERSION.SDK_INT >= 37) {
-            Intent(ACTION_PICK_CONTACTS).apply {
+            Intent("android.provider.action.PICK_CONTACTS").apply {
                 // Request phone numbers specifically
                 val requestedFields = arrayListOf(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
