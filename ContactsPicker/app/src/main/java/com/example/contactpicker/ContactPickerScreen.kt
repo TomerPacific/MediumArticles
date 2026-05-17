@@ -14,12 +14,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,53 +43,60 @@ fun ContactPickerScreen(
     viewModel: ContactPickerViewModel = viewModel()
 ) {
     val context = LocalContext.current
+    var showPermissionRationale by remember { mutableStateOf(false) }
 
-    // Launcher for the modern API (17+)
     val pickContactsLauncher = rememberLauncherForActivityResult(
         contract = PickContactsContract()
     ) { uris ->
         viewModel.onModernContactsPicked(uris)
     }
 
-    // Permission Launcher for legacy access
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        if (isGranted) {
-            viewModel.openLegacyPicker()
-        }
+        if (isGranted) viewModel.openLegacyPicker()
+    }
+
+    if (showPermissionRationale) {
+        PermissionRationaleDialog(
+            onConfirm = {
+                showPermissionRationale = false
+                permissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+            },
+            onDismiss = { showPermissionRationale = false }
+        )
     }
 
     if (viewModel.showLegacyPicker) {
         LegacyContactPickerUI(
-            contacts = viewModel.legacyContacts,
-            onToggleSelection = { index -> viewModel.toggleLegacyContactSelection(index) },
+            contacts = viewModel.filteredLegacyContacts,
+            searchQuery = viewModel.searchQuery,
+            onSearchQueryChange = { viewModel.updateSearchQuery(it) },
+            onToggleSelection = { id -> viewModel.toggleLegacyContactSelection(id) },
             onSelectionComplete = { selected -> viewModel.onLegacySelectionComplete(selected) },
             onCancel = { viewModel.closeLegacyPicker() }
         )
     } else {
         Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(16.dp),
+            modifier = modifier.fillMaxSize().padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = "Contact Selection Demo",
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
+            Text("Contacts Picker", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
             
+            Text(
+                text = if (Build.VERSION.SDK_INT >= 37) "Using Modern Privacy API" else "Legacy Compatibility Mode",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.secondary
+            )
+
             Spacer(modifier = Modifier.height(48.dp))
 
             OutlinedButton(
                 onClick = { pickContactsLauncher.launch(false) },
-                modifier = Modifier
-                    .height(56.dp)
-                    .fillMaxWidth(0.8f)
+                modifier = Modifier.height(56.dp).fillMaxWidth(0.8f)
             ) {
-                Text("Select Single Contact (API 11+)")
+                Text("Pick One Contact")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -95,50 +110,60 @@ fun ContactPickerScreen(
                         if (status == PackageManager.PERMISSION_GRANTED) {
                             viewModel.openLegacyPicker()
                         } else {
-                            permissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+                            showPermissionRationale = true
                         }
                     }
                 },
-                modifier = Modifier
-                    .height(56.dp)
-                    .fillMaxWidth(0.8f)
+                modifier = Modifier.height(56.dp).fillMaxWidth(0.8f)
             ) {
-                val label = if (Build.VERSION.SDK_INT >= 37) "Modern Multi-Select (API 17+)" else "Legacy Multi-Select (Needs Permission)"
-                Text(label)
+                Text("Pick Multiple (Max 10)")
             }
 
             Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = "Selected: ${viewModel.selectedContactNames.size}",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.Start)
-            )
+            Text("Selected: ${viewModel.selectedContacts.size}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Start))
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-            if (viewModel.selectedContactNames.isEmpty()) {
+            if (viewModel.selectedContacts.isEmpty()) {
                 Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                     Text("No contacts selected", color = MaterialTheme.colorScheme.outline)
                 }
             } else {
                 LazyColumn(modifier = Modifier.weight(1f)) {
-                    items(viewModel.selectedContactNames) { name ->
-                        Text(
-                            text = name,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                        )
+                    items(viewModel.selectedContacts) { contact ->
+                        SelectedContactItem(contact)
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Before API 17, multi-selection requires the READ_CONTACTS permission and a custom UI. API 17+ uses the system picker without needing permissions.",
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center
-            )
         }
     }
+}
+
+@Composable
+fun SelectedContactItem(contact: ContactEntry) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text(text = contact.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+            contact.phoneNumber?.let {
+                Text(text = it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
+            }
+        }
+    }
+}
+
+@Composable
+fun PermissionRationaleDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Contact Access Required") },
+        text = { Text("To select multiple contacts on this version of Android, we need permission to read your contacts. We will only use this to let you choose from the list.") },
+        confirmButton = {
+            TextButton(onClick = onConfirm) { Text("Allow") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel") }
+        }
+    )
 }
