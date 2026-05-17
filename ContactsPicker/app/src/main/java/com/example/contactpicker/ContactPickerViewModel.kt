@@ -26,41 +26,43 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
     var searchQuery by mutableStateOf("")
         private set
 
-    private val legacyContacts = mutableStateListOf<ContactEntry>()
+    private val legacyContactsList = mutableStateListOf<ContactEntry>()
 
     val filteredLegacyContacts by derivedStateOf {
-        if (searchQuery.isEmpty()) legacyContacts
-        else legacyContacts.filter { it.name.contains(searchQuery, ignoreCase = true) }
+        if (searchQuery.isEmpty()) legacyContactsList
+        else legacyContactsList.filter { contact ->
+            contact.name.contains(searchQuery, ignoreCase = true)
+        }
     }
 
     private val context: Context get() = getApplication<Application>().applicationContext
 
-    fun onModernContactsPicked(uris: List<Uri>) {
+    fun onModernContactsPicked(resultUris: List<Uri>) {
         viewModelScope.launch {
-            val contacts = withContext(Dispatchers.IO) {
-                uris.flatMap { contactUri -> resolveContactDetails(contactUri) }
+            val resolvedContacts = withContext(Dispatchers.IO) {
+                resultUris.flatMap { contactUri -> resolveContactDetails(contactUri) }
             }
-            selectedContacts = contacts
+            selectedContacts = resolvedContacts
         }
     }
 
-    fun onLegacySelectionComplete(selected: List<ContactEntry>) {
-        selectedContacts = selected
+    fun onLegacySelectionComplete(selectedItems: List<ContactEntry>) {
+        selectedContacts = selectedItems
         showLegacyPicker = false
         searchQuery = ""
     }
 
     fun openLegacyPicker() {
         viewModelScope.launch {
-            val contacts = withContext(Dispatchers.IO) { loadAllContacts() }
-            legacyContacts.clear()
-            legacyContacts.addAll(contacts)
+            val allContacts = withContext(Dispatchers.IO) { loadAllContacts() }
+            legacyContactsList.clear()
+            legacyContactsList.addAll(allContacts)
             showLegacyPicker = true
         }
     }
 
-    fun updateSearchQuery(query: String) {
-        searchQuery = query
+    fun updateSearchQuery(newQuery: String) {
+        searchQuery = newQuery
     }
 
     fun closeLegacyPicker() {
@@ -69,52 +71,61 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun toggleLegacyContactSelection(contactId: String) {
-        val index = legacyContacts.indexOfFirst { it.id == contactId }
-        if (index != -1) {
-            val contact = legacyContacts[index]
-            legacyContacts[index] = contact.copy(isSelected = !contact.isSelected)
+        val targetIndex = legacyContactsList.indexOfFirst { it.id == contactId }
+        if (targetIndex != -1) {
+            val contact = legacyContactsList[targetIndex]
+            legacyContactsList[targetIndex] = contact.copy(isSelected = !contact.isSelected)
         }
     }
 
     private fun resolveContactDetails(contactUri: Uri): List<ContactEntry> {
-        val list = mutableListOf<ContactEntry>()
+        val contactList = mutableListOf<ContactEntry>()
         val projection = arrayOf(
             ContactsContract.Data.CONTACT_ID,
             ContactsContract.Data.DISPLAY_NAME_PRIMARY,
             ContactsContract.CommonDataKinds.Phone.NUMBER
         )
         context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
-            val idIdx = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID)
-            val nameIdx = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME_PRIMARY)
-            val phoneIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val idColumnIndex = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID)
+            val nameColumnIndex = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME_PRIMARY)
+            val phoneColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
             
             while (cursor.moveToNext()) {
-                val id = if (idIdx != -1) cursor.getString(idIdx) else ""
-                val name = if (nameIdx != -1) cursor.getString(nameIdx) ?: "Unknown" else "Unknown"
-                val phone = if (phoneIdx != -1) cursor.getString(phoneIdx) else null
-                list.add(ContactEntry(id, name, phone))
+                val contactId = if (idColumnIndex != -1) cursor.getString(idColumnIndex) else ""
+                val contactName = if (nameColumnIndex != -1) {
+                    cursor.getString(nameColumnIndex) ?: "Unknown"
+                } else "Unknown"
+                val phoneNumber = if (phoneColumnIndex != -1) cursor.getString(phoneColumnIndex) else null
+                
+                contactList.add(ContactEntry(contactId, contactName, phoneNumber))
             }
         }
-        return list
+        return contactList
     }
 
     private fun loadAllContacts(): List<ContactEntry> {
-        val list = mutableListOf<ContactEntry>()
-        val cursor = context.contentResolver.query(
-            ContactsContract.Contacts.CONTENT_URI,
-            arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME_PRIMARY),
-            null, null, "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} ASC"
+        val contactList = mutableListOf<ContactEntry>()
+        val projection = arrayOf(
+            ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
         )
-
-        cursor?.use {
-            val idIdx = it.getColumnIndex(ContactsContract.Contacts._ID)
-            val nameIdx = it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
-            while (it.moveToNext()) {
-                val id = it.getString(idIdx)
-                val name = it.getString(nameIdx) ?: "Unknown"
-                list.add(ContactEntry(id, name))
+        
+        context.contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            projection,
+            null,
+            null,
+            "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} ASC"
+        )?.use { cursor ->
+            val idColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts._ID)
+            val nameColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+            
+            while (cursor.moveToNext()) {
+                val contactId = cursor.getString(idColumnIndex)
+                val contactName = cursor.getString(nameColumnIndex) ?: "Unknown"
+                contactList.add(ContactEntry(contactId, contactName))
             }
         }
-        return list
+        return contactList
     }
 }

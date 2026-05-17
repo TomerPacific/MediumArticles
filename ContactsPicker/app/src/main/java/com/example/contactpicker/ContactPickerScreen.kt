@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -43,49 +42,61 @@ fun ContactPickerScreen(
     viewModel: ContactPickerViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    var showPermissionRationale by remember { mutableStateOf(false) }
+    var isPermissionRationaleVisible by remember { mutableStateOf(false) }
 
-    val pickContactsLauncher = rememberLauncherForActivityResult(
+    val modernPickerLauncher = rememberLauncherForActivityResult(
         contract = PickContactsContract()
-    ) { uris ->
-        viewModel.onModernContactsPicked(uris)
+    ) { resultUris ->
+        viewModel.onModernContactsPicked(resultUris)
     }
 
-    val permissionLauncher = rememberLauncherForActivityResult(
+    val legacyPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) viewModel.openLegacyPicker()
     }
 
-    if (showPermissionRationale) {
+    if (isPermissionRationaleVisible) {
         PermissionRationaleDialog(
             onConfirm = {
-                showPermissionRationale = false
-                permissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+                isPermissionRationaleVisible = false
+                legacyPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
             },
-            onDismiss = { showPermissionRationale = false }
+            onDismiss = { isPermissionRationaleVisible = false }
         )
     }
 
     if (viewModel.showLegacyPicker) {
         LegacyContactPickerUI(
-            contacts = viewModel.filteredLegacyContacts,
+            contactList = viewModel.filteredLegacyContacts,
             searchQuery = viewModel.searchQuery,
-            onSearchQueryChange = { viewModel.updateSearchQuery(it) },
-            onToggleSelection = { id -> viewModel.toggleLegacyContactSelection(id) },
-            onSelectionComplete = { selected -> viewModel.onLegacySelectionComplete(selected) },
+            onSearchQueryChange = { query -> viewModel.updateSearchQuery(query) },
+            onToggleSelection = { contactId -> viewModel.toggleLegacyContactSelection(contactId) },
+            onSelectionComplete = { selectedItems -> 
+                viewModel.onLegacySelectionComplete(selectedItems) 
+            },
             onCancel = { viewModel.closeLegacyPicker() }
         )
     } else {
         Column(
-            modifier = modifier.fillMaxSize().padding(16.dp),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-            Text("Contacts Picker", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
+            Text(
+                text = "Contacts Picker",
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
             
             Text(
-                text = if (Build.VERSION.SDK_INT >= 37) "Using Modern Privacy API" else "Legacy Compatibility Mode",
+                text = if (Build.VERSION.SDK_INT >= 37) {
+                    "Using Modern Privacy API"
+                } else {
+                    "Legacy Compatibility Mode"
+                },
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -93,8 +104,10 @@ fun ContactPickerScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             OutlinedButton(
-                onClick = { pickContactsLauncher.launch(false) },
-                modifier = Modifier.height(56.dp).fillMaxWidth(0.8f)
+                onClick = { modernPickerLauncher.launch(false) },
+                modifier = Modifier
+                    .height(56.dp)
+                    .fillMaxWidth(0.8f)
             ) {
                 Text("Pick One Contact")
             }
@@ -104,23 +117,33 @@ fun ContactPickerScreen(
             Button(
                 onClick = {
                     if (Build.VERSION.SDK_INT >= 37) {
-                        pickContactsLauncher.launch(true)
+                        modernPickerLauncher.launch(true)
                     } else {
-                        val status = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS)
+                        val status = ContextCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.READ_CONTACTS
+                        )
                         if (status == PackageManager.PERMISSION_GRANTED) {
                             viewModel.openLegacyPicker()
                         } else {
-                            showPermissionRationale = true
+                            isPermissionRationaleVisible = true
                         }
                     }
                 },
-                modifier = Modifier.height(56.dp).fillMaxWidth(0.8f)
+                modifier = Modifier
+                    .height(56.dp)
+                    .fillMaxWidth(0.8f)
             ) {
                 Text("Pick Multiple (Max 10)")
             }
 
             Spacer(modifier = Modifier.height(32.dp))
-            Text("Selected: ${viewModel.selectedContacts.size}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Start))
+            Text(
+                text = "Selected: ${viewModel.selectedContacts.size}",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.Start)
+            )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             if (viewModel.selectedContacts.isEmpty()) {
@@ -129,8 +152,8 @@ fun ContactPickerScreen(
                 }
             } else {
                 LazyColumn(modifier = Modifier.weight(1f)) {
-                    items(viewModel.selectedContacts) { contact ->
-                        SelectedContactItem(contact)
+                    items(viewModel.selectedContacts) { selectedContact ->
+                        SelectedContactItem(selectedContact)
                     }
                 }
             }
@@ -141,13 +164,25 @@ fun ContactPickerScreen(
 @Composable
 fun SelectedContactItem(contact: ContactEntry) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-            Text(text = contact.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
-            contact.phoneNumber?.let {
-                Text(text = it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
+            Text(
+                text = contact.name,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold
+            )
+            contact.phoneNumber?.let { phone ->
+                Text(
+                    text = phone,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
         }
     }
@@ -158,7 +193,9 @@ fun PermissionRationaleDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Contact Access Required") },
-        text = { Text("To select multiple contacts on this version of Android, we need permission to read your contacts. We will only use this to let you choose from the list.") },
+        text = { 
+            Text("To select multiple contacts on this version of Android, we need permission to read your contacts. We will only use this to let you choose from the list.") 
+        },
         confirmButton = {
             TextButton(onClick = onConfirm) { Text("Allow") }
         },

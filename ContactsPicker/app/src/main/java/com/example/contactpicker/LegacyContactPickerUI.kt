@@ -26,9 +26,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * A stateless component to show a custom contact selection list.
+ */
 @Composable
 fun LegacyContactPickerUI(
-    contacts: List<ContactEntry>,
+    contactList: List<ContactEntry>,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
     onToggleSelection: (String) -> Unit,
@@ -47,7 +50,7 @@ fun LegacyContactPickerUI(
         
         OutlinedTextField(
             value = searchQuery,
-            onValueChange = onSearchQueryChange,
+            onValueChange = { newQuery -> onSearchQueryChange(newQuery) },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("Search contacts...") },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
@@ -57,22 +60,26 @@ fun LegacyContactPickerUI(
         Spacer(modifier = Modifier.height(16.dp))
         
         LazyColumn(modifier = Modifier.weight(1f)) {
-            items(contacts, key = { it.id }) { contact ->
+            items(contactList, key = { contactItem -> contactItem.id }) { contactItem ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onToggleSelection(contact.id) }
+                        .clickable { onToggleSelection(contactItem.id) }
                         .padding(vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Checkbox(
-                        checked = contact.isSelected,
-                        onCheckedChange = { onToggleSelection(contact.id) }
+                        checked = contactItem.isSelected,
+                        onCheckedChange = { onToggleSelection(contactItem.id) }
                     )
                     Column(modifier = Modifier.padding(start = 8.dp)) {
-                        Text(contact.name, style = MaterialTheme.typography.bodyLarge)
-                        contact.phoneNumber?.let {
-                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
+                        Text(contactItem.name, style = MaterialTheme.typography.bodyLarge)
+                        contactItem.phoneNumber?.let { phone ->
+                            Text(
+                                text = phone,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.outline
+                            )
                         }
                     }
                 }
@@ -87,12 +94,17 @@ fun LegacyContactPickerUI(
         ) {
             Button(
                 onClick = onCancel,
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                )
             ) {
                 Text("Cancel")
             }
             Button(
-                onClick = { onSelectionComplete(contacts.filter { it.isSelected }) }
+                onClick = {
+                    val selectedItems = contactList.filter { contact -> contact.isSelected }
+                    onSelectionComplete(selectedItems)
+                }
             ) {
                 Text("Done")
             }

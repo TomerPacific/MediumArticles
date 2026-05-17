@@ -14,17 +14,20 @@ import androidx.activity.result.contract.ActivityResultContract
  * Enhanced to request specific data fields when using the modern API.
  */
 class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
-    override fun createIntent(context: Context, input: Boolean): Intent {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) {
+    override fun createIntent(context: Context, isMultipleSelection: Boolean): Intent {
+        return if (Build.VERSION.SDK_INT >= 37) {
             Intent(ACTION_PICK_CONTACTS).apply {
                 // Request phone numbers specifically
                 val requestedFields = arrayListOf(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
                 )
                 // Use the modern extra key for requested fields
-                putStringArrayListExtra("android.provider.extra.PICK_CONTACTS_REQUESTED_DATA_FIELDS", requestedFields)
+                putStringArrayListExtra(
+                    "android.provider.extra.PICK_CONTACTS_REQUESTED_DATA_FIELDS",
+                    requestedFields
+                )
                 
-                if (input) {
+                if (isMultipleSelection) {
                     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                     // Optional: limit to 10 contacts
                     putExtra("android.provider.extra.PICK_CONTACTS_SELECTION_LIMIT", 10)
@@ -37,13 +40,17 @@ class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
 
     override fun parseResult(resultCode: Int, intent: Intent?): List<Uri> {
         return if (resultCode == Activity.RESULT_OK && intent != null) {
-            val uris = mutableListOf<Uri>()
+            val contactUris = mutableListOf<Uri>()
             intent.clipData?.let { clipData ->
                 for (i in 0 until clipData.itemCount) {
-                    clipData.getItemAt(i).uri?.let { uris.add(it) }
+                    clipData.getItemAt(i).uri?.let { uri ->
+                        contactUris.add(uri)
+                    }
                 }
-            } ?: intent.data?.let { uris.add(it) }
-            uris.distinct()
+            } ?: intent.data?.let { uri ->
+                contactUris.add(uri)
+            }
+            contactUris.distinct()
         } else {
             emptyList()
         }
