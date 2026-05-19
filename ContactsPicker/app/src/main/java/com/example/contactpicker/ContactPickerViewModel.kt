@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 class ContactPickerViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object {
-        private const val SELECTION_LIMIT = 10
+        const val SELECTION_LIMIT = 10
     }
 
     var selectedContacts by mutableStateOf<List<ContactEntry>>(emptyList())

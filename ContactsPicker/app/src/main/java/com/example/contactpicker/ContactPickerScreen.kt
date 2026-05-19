@@ -70,6 +70,7 @@ fun ContactPickerScreen(
         LegacyContactPickerUI(
             contactList = viewModel.filteredLegacyContacts,
             selectedCount = viewModel.selectedLegacyCount,
+            selectionLimit = ContactPickerViewModel.SELECTION_LIMIT,
             searchQuery = viewModel.searchQuery,
             onSearchQueryChange = { query -> viewModel.updateSearchQuery(query) },
             onToggleSelection = { contactId -> viewModel.toggleLegacyContactSelection(contactId) },

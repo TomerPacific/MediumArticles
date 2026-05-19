@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 fun LegacyContactPickerUI(
     contactList: List<ContactEntry>,
     selectedCount: Int,
+    selectionLimit: Int,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
     onToggleSelection: (String) -> Unit,
@@ -52,9 +53,9 @@ fun LegacyContactPickerUI(
         ) {
             Text("Select Contacts", style = MaterialTheme.typography.titleLarge)
             Text(
-                text = "$selectedCount/10",
+                text = "$selectedCount/$selectionLimit",
                 style = MaterialTheme.typography.titleMedium,
-                color = if (selectedCount >= 10) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+                color = if (selectedCount >= selectionLimit) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
             )
         }
         
