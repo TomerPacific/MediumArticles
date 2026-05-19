@@ -187,27 +187,37 @@ class ContactPickerViewModel(application: Application) : AndroidViewModel(applic
     }
 
     private fun loadAllContacts(): List<ContactEntry> {
+        if (!hasReadContactsPermission()) return emptyList()
+
         val contactList = mutableListOf<ContactEntry>()
         val projection = arrayOf(
             ContactsContract.Contacts._ID,
             ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
         )
         
-        context.contentResolver.query(
-            ContactsContract.Contacts.CONTENT_URI,
-            projection,
-            null,
-            null,
-            "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} ASC"
-        )?.use { cursor ->
-            val idColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts._ID)
-            val nameColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
-            
-            while (cursor.moveToNext()) {
-                val contactId = cursor.getString(idColumnIndex)
-                val contactName = cursor.getString(nameColumnIndex) ?: "Unknown"
-                contactList.add(ContactEntry(contactId, contactName))
+        try {
+            context.contentResolver.query(
+                ContactsContract.Contacts.CONTENT_URI,
+                projection,
+                null,
+                null,
+                "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} ASC"
+            )?.use { cursor ->
+                val idColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts._ID)
+                val nameColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+                
+                while (cursor.moveToNext()) {
+                    val contactId = if (idColumnIndex != -1) cursor.getString(idColumnIndex) else ""
+                    val contactName = if (nameColumnIndex != -1) cursor.getString(nameColumnIndex) ?: "Unknown" else "Unknown"
+                    if (contactId.isNotEmpty()) {
+                        contactList.add(ContactEntry(contactId, contactName))
+                    }
+                }
             }
+        } catch (e: SecurityException) {
+            // Permission revoked or missing
+        } catch (e: Exception) {
+            // Other query errors
         }
         return contactList
     }
