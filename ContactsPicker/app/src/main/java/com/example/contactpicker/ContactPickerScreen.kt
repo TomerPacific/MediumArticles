@@ -133,7 +133,7 @@ fun ContactPickerScreen(
                     .height(56.dp)
                     .fillMaxWidth(0.8f)
             ) {
-                Text("Pick Multiple (Max 10)")
+                Text("Pick Multiple Contacts")
             }
 
             Spacer(modifier = Modifier.height(32.dp))
