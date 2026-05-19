@@ -16,7 +16,7 @@ import androidx.activity.result.contract.ActivityResultContract
  */
 class PickContactsContract : ActivityResultContract<Boolean, List<Uri>>() {
     override fun createIntent(context: Context, input: Boolean): Intent {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) { /// <--- HERE
+        return if (Build.VERSION.SDK_INT >= 37) {
             Intent(ACTION_PICK_CONTACTS).apply {
                 val requestedFields = arrayListOf(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
