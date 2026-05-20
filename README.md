@@ -153,3 +153,7 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 75. [How I Shrunk My Android App Size by Converting PNGs to Vector Drawables](https://proandroiddev.com/how-i-shrunk-my-android-app-size-by-converting-pngs-to-vector-drawables-5005da8cb48e)
 
+### 76. [Android 17 Contacts Permission](https://proandroiddev.com/contacts-permission-in-android-17-838af8bdf139)
+
+
+
