@@ -155,5 +155,5 @@ A repository that contains links to all the articles I wrote and code associated
 
 ### 76. [Android 17 Contacts Permission](https://proandroiddev.com/contacts-permission-in-android-17-838af8bdf139)
 
-
+### 77. [What Happened When I Lost My Keystore File](https://proandroiddev.com/what-happened-when-i-lost-my-keystore-file-8ddfc0b35843)
 
